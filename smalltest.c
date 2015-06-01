@@ -16,6 +16,21 @@ int main()
   int fd = open("test2.txt",O_WRONLY);
 	//int fd2 = open64("test3.txt",O_WRONLY);
 
+	char buffer[20] = "THIS IS JUST TEXT";
+
+	write(fd,(void*)buffer,10);
+
+	pwrite(fd,(void*)buffer,10,1);
+
+	close(fd);
+
+	fd = open("test4.txt",O_RDONLY);
+
+	read(fd,(void*)buffer,10);
+
+	pread(fd,(void*)buffer,10,1);
+
+	close(fd);
 	if(in!=NULL)
 	{
 	  ch = fgetc(in);

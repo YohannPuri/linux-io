@@ -33,6 +33,7 @@ static int   (*_fsetpos) ( FILE * stream, const fpos_t * pos ) = NULL;
 static int   (*_fseek) ( FILE * stream, long int offset, int origin ) = NULL;
 static long int (*_ftell) ( FILE * stream ) = NULL;
 static int (*_feof) ( FILE * stream ) = NULL;
+static int (*_close)(int fd) = NULL;
 /*
 int fprintf(FILE *stream, const char *format, ...);
 
@@ -42,6 +43,12 @@ int vfprintf(FILE *stream, const char *format, va_list ap);
 
 // Pointers to original fcntl.h and unistd.h functions
 static int (*_open)(const char *, int, mode_t) = NULL;
+
+static ssize_t (*_read)(int fd, void *buf, size_t count) = NULL;
+static ssize_t (*_write)(int fd, const void *buf, size_t count) = NULL;
+static ssize_t (*_pread)(int fd, void *buf, size_t count, off_t offset) = NULL;
+
+static ssize_t (*_pwrite)(int fd, const void *buf, size_t count, off_t offset) = NULL;
 //static int (*_open64)(const char *, int, mode_t) = NULL;
 
 
@@ -77,11 +84,11 @@ static void wrap_init(void)
 
     _open = dlsym(RTLD_NEXT,"open");
     //_open64 = dlsym(RTLD_NEXT,"open64");
-    //_close = dlsym(RTLD_NEXT,"close");
-    //_read = dlsym(RTLD_NEXT,"read");
-    //_write = dlsym(RTLD_NEXT,"write");
-    //_pread = dlsym(RTLD_NEXT,"pread");
-    //_pwrite = dlsym(RTLD_NEXT,"pwrite");
+    _close = dlsym(RTLD_NEXT,"close");
+    _read = dlsym(RTLD_NEXT,"read");
+    _write = dlsym(RTLD_NEXT,"write");
+    _pread = dlsym(RTLD_NEXT,"pread");
+    _pwrite = dlsym(RTLD_NEXT,"pwrite");
     //_creat = dlsym(RTLD_NEXT,"creat");
 
     printf("START\n");
@@ -184,19 +191,19 @@ int fputs ( const char * str, FILE * stream )
 int fseek ( FILE * stream, long int offset, int origin )
 {
     printf("INTERCEPTED fseek\n");
-	return _fseek(stream,offset,origin);
+    return _fseek(stream,offset,origin);
 }
 
 long int ftell ( FILE * stream )
 {
     printf("INTERCEPTED ftell\n");
-	return _ftell(stream);
+    return _ftell(stream);
 }
 
 int feof ( FILE * stream )
 {
     printf("INTERCEPTED feof\n");
-	return _feof(stream);
+    return _feof(stream);
 }
 
 
@@ -216,6 +223,42 @@ int open(const char *pathname, int flags, ...)
     return _open(pathname, flags, mode);
 
 }
+
+ssize_t read(int fd, void *buf, size_t count)
+{
+    printf("INTERCEPTED read\n");
+
+    return _read(fd,buf,count);
+}
+ssize_t write(int fd, const void *buf, size_t count)
+{
+    printf("INTERCEPTED write\n");
+
+    return _write(fd,buf,count);
+}
+
+ssize_t pread(int fd, void *buf, size_t count, off_t offset)
+{
+    printf("INTERCEPTED pread\n");
+
+    return _pread(fd,buf,count,offset);
+}
+
+
+ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
+{
+    printf("INTERCEPTED pwrite\n");
+
+    return _pwrite(fd,buf,count,offset);
+}
+
+int close(int fd)
+{
+    printf("INTERCEPTED Close\n");
+
+    return _close(fd);
+}
+
 /*
 int open64(const char *pathname, int flags, ...)
 {
