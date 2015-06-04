@@ -13,7 +13,7 @@
 
 // Global Variable to hold clock ticks at program start
 clock_t program_start;
-
+FILE *logFile;
 
 // Defining a new constructor and destructor
 static void wrap_init(void) __attribute__((constructor));
@@ -56,7 +56,7 @@ static ssize_t (*_pwrite)(int fd, const void *buf, size_t count, off_t offset) =
 
 static void wrap_init(void)
 {
-    program_start = clock();            // Set global program clock
+    
 
     // Set original stdio functions
 
@@ -65,7 +65,7 @@ static void wrap_init(void)
     //_fprintf = dlsym(RTLD_NEXT,"fprintf");
     //_vfprintf = dlsym(RTLD_NEXT,"vfprintf");
     //_fscanf = dlsym(RTLD_NEXT,"fscanf");
-    //_sscanf = dlsym(RTLD_NEXT,"sscanf");
+    //_sscanf = dlsym(RTstreamLD_NEXT,"sscanf");
     _fgetc = dlsym(RTLD_NEXT,"fgetc");
     _fputc = dlsym(RTLD_NEXT,"fputc");
     _feof = dlsym(RTLD_NEXT,"feof");
@@ -93,12 +93,17 @@ static void wrap_init(void)
 
     printf("START\n");
 
+    logFile = _fopen("logFile.txt","w");
+
+    program_start = clock();            // Set global program clock
+
 }
 
 // Destructor
 
 static void wrap_deinit(void)
 {
+    _fclose(logFile);
     printf("End\n");
 }
 
@@ -107,103 +112,260 @@ static void wrap_deinit(void)
 
 FILE* fopen(const char *pathname,const char *mode)
 {   
+    //printf("INTERCEPTED Fopen\n");
 
-    printf("INTERCEPTED Fopen\n");
+    clock_t start = clock();
 
+    FILE * ret = _fopen(pathname,mode);
 
-    return _fopen(pathname,mode);
+    clock_t end = clock();
 
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fopen(%s,%s)\n",called_time,exec_time,pathname,mode);
+
+    return ret;
 }
 
 /* WRAPPER FOR FCLOSE */
 
 int fclose(FILE *stream)
 {
-    printf("INTERCEPTED Fclose\n");
+    //printf("INTERCEPTED Fclose\n");
 
-    return _fclose(stream);
+    clock_t start = clock();
+
+    int ret = _fclose(stream);
+
+    clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fclose(%p) = %d\n",called_time,exec_time,stream,ret);
+
+    return ret;
 }
 
 /* WRAPPER FOR FGETC */
 
 int fgetc(FILE *__stream)
 {
-    printf("INTERCEPTED Fgetc\n");
+    //printf("INTERCEPTED Fgetc\n");
 
-    return _fgetc(__stream);
+    clock_t start = clock();
+
+    int ret = _fgetc(__stream);
+    
+    clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fgetc(%p) = %d\n",called_time,exec_time,__stream,ret);
+
+    return ret;
 }
 
 /* WRAPPER FOR FPUTC*/
 
 int fputc(int character, FILE *stream)
 {
-    printf("INTERCEPTED Fputc\n");
+    //printf("INTERCEPTED Fputc\n");
 
-    return _fputc(character,stream);
+    clock_t start = clock();
+
+    int ret = _fputc(character,stream);
+
+    clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fputc(%d,%p) = %d\n",called_time,exec_time,character,stream,ret);
+
+    return ret;
 }
 
 /* WRAPPER FOR FREAD */
 
 size_t fread( void * ptr, size_t size, size_t count, FILE * stream )
 {
-    printf("INTERCEPTED fread\n");
+    //printf("INTERCEPTED fread\n");
 
-    return _fread(ptr,size,count,stream);
+    clock_t start = clock();
+
+    size_t ret = _fread(ptr,size,count,stream);
+
+    clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fread(%zu,%zu,%p) = %zu\n",called_time,exec_time,size,count,stream,ret);
+
+    return ret;
 }
 
 size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream )
 {
-    printf("INTERCEPTED fwriten");
-    return _fwrite(ptr,size,count,stream);
+    //printf("INTERCEPTED fwriten");
+
+    clock_t start = clock();
+
+    size_t ret = _fwrite(ptr,size,count,stream);
+
+    clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fwrite(%zu,%zu,%p) = %zu\n",called_time,exec_time,size,count,stream,ret);
+
+    return ret;
 }
 
 
 int fsetpos ( FILE * stream, const fpos_t * pos )
 {
-    printf("INTERCEPTED fsetpos\n");
+    //printf("INTERCEPTED fsetpos\n");
 
-    return _fsetpos(stream,pos);
+    clock_t start = clock();
+
+    int ret = _fsetpos(stream,pos);
+
+    clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fsetpos(%p) = %d\n",called_time,exec_time,stream,ret);
+
+    return ret;
 }
 
 int fgetpos ( FILE * stream, fpos_t * pos )
 {
-    printf("INTERCEPTED fgetpos\n");
+    //printf("INTERCEPTED fgetpos\n");
 
-    return _fgetpos(stream,pos);
+    clock_t start = clock();
+
+    int ret = _fgetpos(stream,pos);
+
+    clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fgetpos(%p) = %d\n",called_time,exec_time,stream,ret);
+
+    return ret;
 }
 
 char * fgets ( char * str, int num, FILE * stream )
 {
-    printf("INTERCEPTED fgets\n");
+    //printf("INTERCEPTED fgets\n");
 
-    return _fgets(str,num,stream);
+    clock_t start = clock();
+
+    char* ret = _fgets(str,num,stream);
+	
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fgets(%s,%d,%p) = %s\n",called_time,exec_time,str,num,stream,ret);
+
+    return ret;
 
 }
 
 int fputs ( const char * str, FILE * stream )
 {
-    printf("INTERCEPTED fputs\n");
+    //printf("INTERCEPTED fputs\n");
 
-    return _fputs(str,stream);
+    clock_t start = clock();
+
+    int ret = _fputs(str,stream);
+
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fputs(%s,%p) = %d\n",called_time,exec_time,str,stream,ret);
+
+    return ret;
 
 }
 
 int fseek ( FILE * stream, long int offset, int origin )
 {
-    printf("INTERCEPTED fseek\n");
-    return _fseek(stream,offset,origin);
+    //printf("INTERCEPTED fseek\n");
+
+    clock_t start = clock();
+
+    int ret = _fseek(stream,offset,origin);
+	
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf fseek(%p,%ld,%d) = %d\n",called_time,exec_time,stream,offset,origin,ret);
+
+    return ret;
 }
 
 long int ftell ( FILE * stream )
 {
-    printf("INTERCEPTED ftell\n");
-    return _ftell(stream);
+    //printf("INTERCEPTED ftell\n");
+
+    clock_t start = clock();
+
+    long int ret = _ftell(stream);
+
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf ftell(%p) = %ld\n",called_time,exec_time,stream,ret);
+
+    return ret;
 }
 
 int feof ( FILE * stream )
 {
-    printf("INTERCEPTED feof\n");
-    return _feof(stream);
+    //printf("INTERCEPTED feof\n");
+
+    clock_t start = clock();
+
+    int ret = _feof(stream);
+
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf feof(%p) = %d\n",called_time,exec_time,stream,ret);
+
+    return ret;
 }
 
 
@@ -211,7 +373,7 @@ int feof ( FILE * stream )
 int open(const char *pathname, int flags, ...)
 {
 
-    printf("INTERCEPTED Open\n");
+    //printf("INTERCEPTED Open\n");
 
     mode_t mode;
     va_list vl;
@@ -219,44 +381,121 @@ int open(const char *pathname, int flags, ...)
     mode = va_arg(vl, mode_t);
     va_end(vl);
 
-        
-    return _open(pathname, flags, mode);
+    clock_t start = clock();
+    
+    int ret = _open(pathname, flags, mode);
+
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf open(%s,%d) = %d\n",called_time,exec_time,pathname,flags,ret);
+
+    return ret;
+	
 
 }
 
 ssize_t read(int fd, void *buf, size_t count)
 {
-    printf("INTERCEPTED read\n");
+    //printf("INTERCEPTED read\n");
+	
+	clock_t start = clock();
+    
+    ssize_t ret = _read(fd,buf,count);
 
-    return _read(fd,buf,count);
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf read(%d,%p,%zu) = %zu\n",called_time,exec_time,fd,buf,count,ret);
+
+    return ret;
 }
 ssize_t write(int fd, const void *buf, size_t count)
 {
-    printf("INTERCEPTED write\n");
+    //printf("INTERCEPTED write\n");
+	
+	clock_t start = clock();
+    
+    ssize_t ret = _write(fd,buf,count);
 
-    return _write(fd,buf,count);
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf write(%d,%p,%zu) = %zu\n",called_time,exec_time,fd,buf,count,ret);
+
+    return ret;
+    
 }
 
 ssize_t pread(int fd, void *buf, size_t count, off_t offset)
 {
-    printf("INTERCEPTED pread\n");
+    //printf("INTERCEPTED pread\n");
+	
+		
+	clock_t start = clock();
+    
+    ssize_t ret = _pread(fd,buf,count,offset);
 
-    return _pread(fd,buf,count,offset);
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf pread(%d,%p,%zu,%ld) = %zu\n",called_time,exec_time,fd,buf,count,offset,ret);
+
+    return ret;
+
+ 
 }
 
 
 ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 {
-    printf("INTERCEPTED pwrite\n");
+    //printf("INTERCEPTED pwrite\n");
 
-    return _pwrite(fd,buf,count,offset);
+	clock_t start = clock();
+    
+    ssize_t ret = _pwrite(fd,buf,count,offset);
+
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf pwrite(%d,%p,%zu,%ld) = %zu\n",called_time,exec_time,fd,buf,count,offset,ret);
+
+    return ret;
+    
 }
 
 int close(int fd)
 {
-    printf("INTERCEPTED Close\n");
+   
+	
+	clock_t start = clock();
+    
+    int ret = _close(fd);
 
-    return _close(fd);
+	clock_t end = clock();
+
+    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+
+    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+
+    fprintf(logFile,"%lf %lf close(%d) = %d\n",called_time,exec_time,fd,ret);
+
+    return ret;
 }
 
 /*
