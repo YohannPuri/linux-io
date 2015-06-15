@@ -58,9 +58,6 @@ int main()
 	starr[5] = '\0';
 	fseek(out,curr,SEEK_SET);
 	fputs(starr,out);
-	
-	if(feof(out)==0)
-		printf("Yes %d\n",fd);
 
 	fclose(out);
 	return 0;
