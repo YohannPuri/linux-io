@@ -4,6 +4,7 @@ preload: preload.c
 	$(CC) -shared -Wall -fPIC preload.c -o preload.so -ldl
 
 test:
+	$(CC) -shared -Wall -fPIC preload.c -o preload.so -ldl
 	LD_PRELOAD=./preload.so $(command)
 
 testfile:
