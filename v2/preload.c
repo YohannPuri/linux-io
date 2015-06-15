@@ -93,7 +93,7 @@ static void wrap_init(void)
 
     printf("START\n");
 
-    logFile = _fopen("logFile.txt","w");
+    logFile = _fopen("log.txt","w");
 
     program_start = clock();            // Set global program clock
 
