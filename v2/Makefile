@@ -13,3 +13,5 @@ testfile:
 
 clean:
 	rm -f preload.so
+	rm -f log.txt
+	rm -f smalltest
