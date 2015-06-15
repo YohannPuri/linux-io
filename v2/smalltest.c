@@ -4,10 +4,16 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <time.h>
 
 
 int main()
 {
+
+  program_start = clock();           // Set global program clock
+
+  printf("%lf \n",(double)program_start/CLOCKS_PER_SEC);
+  
   FILE *in = fopen("test.txt","r");
   char ch;
 

@@ -95,7 +95,9 @@ static void wrap_init(void)
 
     logFile = _fopen("log.txt","w");
 
-    program_start = clock();            // Set global program clock
+    program_start = clock();           // Set global program clock
+
+    printf("%lf      ",(double)program_start/CLOCKS_PER_SEC);
 
 }
 
