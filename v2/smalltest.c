@@ -10,7 +10,7 @@
 int main()
 {
 
-  program_start = clock();           // Set global program clock
+  clock_t program_start = clock();           // Set global program clock
 
   printf("%lf \n",(double)program_start/CLOCKS_PER_SEC);
   
