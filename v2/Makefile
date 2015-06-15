@@ -7,11 +7,18 @@ test:
 	LD_PRELOAD=./preload.so $(command)
 
 testfile:
-	$(CC) -g -c -Wall -Werror $(file).c -o $(file)
+	touch test.txt
+	touch test2.txt
+	touch test3.txt
+	$(CC) -shared -Wall -fPIC preload.c -o preload.so -ldl
+	$(CC) -Wall -Werror $(file).c -o $(file)
 	chmod +x $(file)
 	LD_PRELOAD=./preload.so ./$(file)
 
 clean:
+	rm -f test.txt 
+	rm -f test2.txt 
+	rm -f test3.txt 
 	rm -f preload.so
 	rm -f log.txt
 	rm -f smalltest
