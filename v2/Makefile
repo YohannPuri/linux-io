@@ -6,5 +6,9 @@ preload: preload.c
 test:
 	LD_PRELOAD=./preload.so $(command)
 
+testfile:
+	$(CC) -Wall -Werror $(file).c -o $(file)
+	LD_PRELOAD=./preload.so $(file)
+
 clean:
 	rm -f preload.so
