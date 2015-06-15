@@ -8,7 +8,7 @@ test:
 
 testfile:
 	$(CC) -Wall -Werror $(file).c -o $(file)
-	LD_PRELOAD=./preload.so $(file)
+	LD_PRELOAD=./preload.so ./$(file)
 
 clean:
 	rm -f preload.so
