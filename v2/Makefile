@@ -8,7 +8,7 @@ test:
 
 testfile:
 	$(CC) -c -Wall -Werror $(file).c -o $(file)
-	chmod u+x $(file)
+	chmod x $(file)
 	LD_PRELOAD=./preload.so ./$(file)
 
 clean:
