@@ -278,8 +278,8 @@ char * fgets ( char * str, int num, FILE * stream )
     clock_t start = clock();
 
     char* ret = _fgets(str,num,stream);
-    
-    clock_t end = clock();
+	
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -299,7 +299,7 @@ int fputs ( const char * str, FILE * stream )
 
     int ret = _fputs(str,stream);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -318,8 +318,8 @@ int fseek ( FILE * stream, long int offset, int origin )
     clock_t start = clock();
 
     int ret = _fseek(stream,offset,origin);
-    
-    clock_t end = clock();
+	
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -338,7 +338,7 @@ long int ftell ( FILE * stream )
 
     long int ret = _ftell(stream);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -357,7 +357,7 @@ int feof ( FILE * stream )
 
     int ret = _feof(stream);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -385,7 +385,7 @@ int open(const char *pathname, int flags, ...)
     
     int ret = _open(pathname, flags, mode);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -394,19 +394,19 @@ int open(const char *pathname, int flags, ...)
     fprintf(logFile,"%lf %lf open %s %d = %d\n",called_time,exec_time,pathname,flags,ret);
 
     return ret;
-    
+	
 
 }
 
 ssize_t read(int fd, void *buf, size_t count)
 {
     //printf("INTERCEPTED read\n");
-    
-    clock_t start = clock();
+	
+	clock_t start = clock();
     
     ssize_t ret = _read(fd,buf,count);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -419,12 +419,12 @@ ssize_t read(int fd, void *buf, size_t count)
 ssize_t write(int fd, const void *buf, size_t count)
 {
     //printf("INTERCEPTED write\n");
-    
-    clock_t start = clock();
+	
+	clock_t start = clock();
     
     ssize_t ret = _write(fd,buf,count);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -439,13 +439,13 @@ ssize_t write(int fd, const void *buf, size_t count)
 ssize_t pread(int fd, void *buf, size_t count, off_t offset)
 {
     //printf("INTERCEPTED pread\n");
-    
-        
-    clock_t start = clock();
+	
+		
+	clock_t start = clock();
     
     ssize_t ret = _pread(fd,buf,count,offset);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -463,11 +463,11 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 {
     //printf("INTERCEPTED pwrite\n");
 
-    clock_t start = clock();
+	clock_t start = clock();
     
     ssize_t ret = _pwrite(fd,buf,count,offset);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
@@ -482,12 +482,12 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 int close(int fd)
 {
    
-    
-    clock_t start = clock();
+	
+	clock_t start = clock();
     
     int ret = _close(fd);
 
-    clock_t end = clock();
+	clock_t end = clock();
 
     double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
 
