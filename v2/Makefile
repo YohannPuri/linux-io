@@ -16,7 +16,7 @@ testfile:
 	touch test2.txt
 	touch test3.txt
 	touch test4.txt
-	$(CC) -shared -Wall -fPIC preload.c -o $(pf).so -ldl
+	$(CC) -shared -Wall -fPIC $(pf).c -o $(pf).so -ldl
 	$(CC) -Wall -Werror $(file).c -o $(file)
 	chmod +x $(file)
 	LD_PRELOAD=./$(pf).so ./$(file)
