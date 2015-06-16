@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
 
-#include <time.h>               // For clock ticks
+#include <time.h>               // For get_tsc ticks
 #include <stdio.h>              // For file I/O functions
 #include <stdlib.h>
 #include <unistd.h>             // For file I/O functions
@@ -11,8 +11,9 @@
 #include <string.h>             
 #include <limits.h>
 
-// Global Variable to hold clock ticks at program start
-static clock_t program_start;
+#define CPU_SPEED 2499998000
+// Global Variable to hold get_tsc ticks at program start
+static unsigned long long program_start;
 static FILE *logFile;
 
 // Defining a new constructor and destructor
@@ -95,9 +96,9 @@ static void wrap_init(void)
 
     logFile = _fopen("log.txt","w");
 
-    program_start = clock();           // Set global program clock
+    program_start = get_tsc();           // Set global program get_tsc
 
-    printf("%lf      ",(double)program_start/CLOCKS_PER_SEC);
+    printf("%lf      ",(double)program_start/CPU_SPEED);
 
 }
 
@@ -109,6 +110,12 @@ static void wrap_deinit(void)
     printf("End\n");
 }
 
+static __inline__ unsigned long long get_tsc(void)
+{
+    unsigned long long tsc;
+    asm volatile ("rdtsc" : "=A" (tsc));
+    return tsc;
+}
 
 /* WRAPPER FOR FOPEN */
 
@@ -116,15 +123,15 @@ FILE* fopen(const char *pathname,const char *mode)
 {   
     //printf("INTERCEPTED Fopen\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     FILE * ret = _fopen(pathname,mode);
 
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fopen %s %s =%x \n",called_time,exec_time,pathname,mode,ret);
 
@@ -137,15 +144,15 @@ int fclose(FILE *stream)
 {
     //printf("INTERCEPTED Fclose\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _fclose(stream);
 
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fclose %p = %d\n",called_time,exec_time,stream,ret);
 
@@ -158,15 +165,15 @@ int fgetc(FILE *__stream)
 {
     //printf("INTERCEPTED Fgetc\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _fgetc(__stream);
     
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fgetc %p = %d\n",called_time,exec_time,__stream,ret);
 
@@ -179,15 +186,15 @@ int fputc(int character, FILE *stream)
 {
     //printf("INTERCEPTED Fputc\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _fputc(character,stream);
 
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fputc %d %p = %d\n",called_time,exec_time,character,stream,ret);
 
@@ -200,15 +207,15 @@ size_t fread( void * ptr, size_t size, size_t count, FILE * stream )
 {
     //printf("INTERCEPTED fread\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     size_t ret = _fread(ptr,size,count,stream);
 
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fread %zu %zu %p = %zu\n",called_time,exec_time,size,count,stream,ret);
 
@@ -219,15 +226,15 @@ size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream )
 {
     //printf("INTERCEPTED fwriten");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     size_t ret = _fwrite(ptr,size,count,stream);
 
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fwrite %zu %zu %p = %zu\n",called_time,exec_time,size,count,stream,ret);
 
@@ -239,15 +246,15 @@ int fsetpos ( FILE * stream, const fpos_t * pos )
 {
     //printf("INTERCEPTED fsetpos\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _fsetpos(stream,pos);
 
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fsetpos %p = %d\n",called_time,exec_time,stream,ret);
 
@@ -258,15 +265,15 @@ int fgetpos ( FILE * stream, fpos_t * pos )
 {
     //printf("INTERCEPTED fgetpos\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _fgetpos(stream,pos);
 
-    clock_t end = clock();
+    unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fgetpos %p = %d\n",called_time,exec_time,stream,ret);
 
@@ -277,15 +284,15 @@ char * fgets ( char * str, int num, FILE * stream )
 {
     //printf("INTERCEPTED fgets\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     char* ret = _fgets(str,num,stream);
 	
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fgets %s %d %p = %s\n",called_time,exec_time,str,num,stream,ret);
 
@@ -297,15 +304,15 @@ int fputs ( const char * str, FILE * stream )
 {
     //printf("INTERCEPTED fputs\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _fputs(str,stream);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fputs %s %p = %d\n",called_time,exec_time,str,stream,ret);
 
@@ -317,15 +324,15 @@ int fseek ( FILE * stream, long int offset, int origin )
 {
     //printf("INTERCEPTED fseek\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _fseek(stream,offset,origin);
 	
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf fseek %p %ld %d = %d\n",called_time,exec_time,stream,offset,origin,ret);
 
@@ -336,15 +343,15 @@ long int ftell ( FILE * stream )
 {
     //printf("INTERCEPTED ftell\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     long int ret = _ftell(stream);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf ftell %p = %ld\n",called_time,exec_time,stream,ret);
 
@@ -355,15 +362,15 @@ int feof ( FILE * stream )
 {
     //printf("INTERCEPTED feof\n");
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
 
     int ret = _feof(stream);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf feof %p = %d\n",called_time,exec_time,stream,ret);
 
@@ -383,15 +390,15 @@ int open(const char *pathname, int flags, ...)
     mode = va_arg(vl, mode_t);
     va_end(vl);
 
-    clock_t start = clock();
+    unsigned long long start = get_tsc();
     
     int ret = _open(pathname, flags, mode);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf open %s %d = %d\n",called_time,exec_time,pathname,flags,ret);
 
@@ -404,15 +411,15 @@ ssize_t read(int fd, void *buf, size_t count)
 {
     //printf("INTERCEPTED read\n");
 	
-	clock_t start = clock();
+	unsigned long long start = get_tsc();
     
     ssize_t ret = _read(fd,buf,count);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf read %d %p %zu = %zu\n",called_time,exec_time,fd,buf,count,ret);
 
@@ -422,15 +429,15 @@ ssize_t write(int fd, const void *buf, size_t count)
 {
     //printf("INTERCEPTED write\n");
 	
-	clock_t start = clock();
+	unsigned long long start = get_tsc();
     
     ssize_t ret = _write(fd,buf,count);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf write %d %p %zu = %zu\n",called_time,exec_time,fd,buf,count,ret);
 
@@ -443,15 +450,15 @@ ssize_t pread(int fd, void *buf, size_t count, off_t offset)
     //printf("INTERCEPTED pread\n");
 	
 		
-	clock_t start = clock();
+	unsigned long long start = get_tsc();
     
     ssize_t ret = _pread(fd,buf,count,offset);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf pread %d %p %zu %ld = %zu\n",called_time,exec_time,fd,buf,count,offset,ret);
 
@@ -465,15 +472,15 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 {
     //printf("INTERCEPTED pwrite\n");
 
-	clock_t start = clock();
+	unsigned long long start = get_tsc();
     
     ssize_t ret = _pwrite(fd,buf,count,offset);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf pwrite %d %p %zu %ld = %zu\n",called_time,exec_time,fd,buf,count,offset,ret);
 
@@ -485,15 +492,15 @@ int close(int fd)
 {
    
 	
-	clock_t start = clock();
+	unsigned long long start = get_tsc();
     
     int ret = _close(fd);
 
-	clock_t end = clock();
+	unsigned long long end = get_tsc();
 
-    double called_time = (double)(start-program_start)/(double)(CLOCKS_PER_SEC);
+    double called_time = (double)(start-program_start)/(double)(CPU_SPEED);
 
-    double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
+    double exec_time = (double)(end-start)/(double)(CPU_SPEED);
 
     fprintf(logFile,"%lf %lf close %d = %d\n",called_time,exec_time,fd,ret);
 
