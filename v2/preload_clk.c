@@ -16,17 +16,19 @@ static clock_t program_start;
 static FILE *logFile;
 static int times = 0;
 
-void *threadproc(void *arg)
+void* threadproc(void *arg)
 {
     while(1)
     {
-        sleep(5);
+        usleep(5);
         times++;
     }
 }
 ...
+
 pthread_t tid;
-pthread_create(&tid, NULL, &threadproc, NULL);
+void* ag;
+pthread_create(&tid, NULL, threadproc, ag);
 
 
 // Defining a new constructor and destructor
