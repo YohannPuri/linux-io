@@ -126,7 +126,7 @@ FILE* fopen(const char *pathname,const char *mode)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fopen %s %s =%x \n",called_time,exec_time,pathname,mode,ret);
+    fprintf(logFile,"%lf %lf fopen %s %s = %x \n",called_time,exec_time,pathname,mode,ret);
 
     return ret;
 }
