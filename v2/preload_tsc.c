@@ -20,6 +20,15 @@ static FILE *logFile;
 static void wrap_init(void) __attribute__((constructor));
 static void wrap_deinit(void) __attribute__((destructor));
 
+
+static __inline__ unsigned long long get_tsc(void)
+{
+    unsigned long long tsc;
+    asm volatile ("rdtsc" : "=A" (tsc));
+    return tsc;
+}
+
+
 // Pointers to original stdio.h functions
 static FILE* (*_fopen) (const char *, const char *) = NULL;
 static int   (*_fclose)(FILE *stream)               = NULL;
@@ -110,12 +119,6 @@ static void wrap_deinit(void)
     printf("End\n");
 }
 
-static __inline__ unsigned long long get_tsc(void)
-{
-    unsigned long long tsc;
-    asm volatile ("rdtsc" : "=A" (tsc));
-    return tsc;
-}
 
 /* WRAPPER FOR FOPEN */
 
