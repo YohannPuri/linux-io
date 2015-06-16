@@ -24,7 +24,7 @@ void *threadproc(void *arg)
         times++;
     }
 }
-
+...
 pthread_t tid;
 pthread_create(&tid, NULL, &threadproc, NULL);
 
