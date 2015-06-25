@@ -11,6 +11,7 @@
 #include <string.h>             
 #include <limits.h>
 #include <sys/types.h>
+#include <sys/syscall.h>
 
 // Global Variable to hold clock ticks at program start
 static clock_t program_start;
@@ -52,6 +53,11 @@ static ssize_t (*_pread)(int fd, void *buf, size_t count, off_t offset) = NULL;
 static ssize_t (*_pwrite)(int fd, const void *buf, size_t count, off_t offset) = NULL;
 //static int (*_open64)(const char *, int, mode_t) = NULL;
 
+
+void gettid()
+{
+    return (long)syscall(224);
+}
 
 // Constructor
 
