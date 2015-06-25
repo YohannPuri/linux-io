@@ -54,7 +54,7 @@ static ssize_t (*_pwrite)(int fd, const void *buf, size_t count, off_t offset) =
 //static int (*_open64)(const char *, int, mode_t) = NULL;
 
 
-void gettid()
+long gettid()
 {
     return (long)syscall(224);
 }
