@@ -116,6 +116,8 @@ FILE* fopen(const char *pathname,const char *mode)
 {   
     //printf("INTERCEPTED Fopen\n");
 
+    pid_t p = getpid();
+
     clock_t start = clock();
 
     FILE * ret = _fopen(pathname,mode);
@@ -126,7 +128,7 @@ FILE* fopen(const char *pathname,const char *mode)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fopen %s %s = %p \n",called_time,exec_time,pathname,mode,ret);
+    fprintf(logFile,"%lf %lf %ld fopen %s %s = %p \n",called_time,exec_time,(long)p,pathname,mode,ret);
 
     return ret;
 }
