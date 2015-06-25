@@ -137,7 +137,7 @@ FILE* fopen(const char *pathname,const char *mode)
 
     pid_t pid = getpid();
 
-    fprintf(logFile,"%lf %lf %ld %ld %ld fopen %s %s = %p \n",called_time,exec_time,(long)pid,(long)tid,pathname,mode,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fopen %s %s = %p \n",called_time,exec_time,(long)pid,(long)tid,pathname,mode,ret);
 
     return ret;
 }
@@ -187,7 +187,7 @@ int fgetc(FILE *__stream)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld %ld fgetc %p = %d\n",called_time,exec_time,(long)pid,(long)tid,__stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fgetc %p = %d\n",called_time,exec_time,(long)pid,(long)tid,__stream,ret);
 
     return ret;
 }
@@ -237,7 +237,7 @@ size_t fread( void * ptr, size_t size, size_t count, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld %ld fread %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fread %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
 
     return ret;
 }
@@ -284,7 +284,7 @@ int fsetpos ( FILE * stream, const fpos_t * pos )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld %ld fsetpos %p = %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fsetpos %p = %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
 
     return ret;
 }
@@ -330,7 +330,7 @@ char * fgets ( char * str, int num, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld %ld fgets %s %d %p = %s\n",called_time,exec_time,(long)pid,(long)tid,str,num,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fgets %s %d %p = %s\n",called_time,exec_time,(long)pid,(long)tid,str,num,stream,ret);
 
 
     return ret;
