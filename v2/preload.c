@@ -153,7 +153,7 @@ int fclose(FILE *stream)
     pid_t pid = getpid();
 
 
-    fprintf(logFile,"%lf %lf %ldfclose %p = %d\n",called_time,exec_time,(long)pid,stream,ret);
+    fprintf(logFile,"%lf %lf %ld fclose %p = %d\n",called_time,exec_time,(long)pid,stream,ret);
 
     return ret;
 }
