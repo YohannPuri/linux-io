@@ -10,6 +10,7 @@
 #include <stdarg.h>             // For variable argumenrs
 #include <string.h>             
 #include <limits.h>
+#include <sys/types.h>
 
 // Global Variable to hold clock ticks at program start
 static clock_t program_start;
