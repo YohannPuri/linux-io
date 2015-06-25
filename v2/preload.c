@@ -56,7 +56,7 @@ static ssize_t (*_pwrite)(int fd, const void *buf, size_t count, off_t offset) =
 
 long gettid()
 {
-    return (long)syscall(224);
+    return (long)syscall(SYS_gettid);
 }
 
 // Constructor
