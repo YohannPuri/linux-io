@@ -116,8 +116,6 @@ FILE* fopen(const char *pathname,const char *mode)
 {   
     //printf("INTERCEPTED Fopen\n");
 
-    pid_t p = getpid();
-
     clock_t start = clock();
 
     FILE * ret = _fopen(pathname,mode);
@@ -128,7 +126,10 @@ FILE* fopen(const char *pathname,const char *mode)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf %ld fopen %s %s = %p \n",called_time,exec_time,(long)p,pathname,mode,ret);
+    pid_t pid = getpid();
+
+
+    fprintf(logFile,"%lf %lf %ld fopen %s %s = %p \n",called_time,exec_time,(long)pid,pathname,mode,ret);
 
     return ret;
 }
@@ -149,7 +150,10 @@ int fclose(FILE *stream)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fclose %p = %d\n",called_time,exec_time,stream,ret);
+    pid_t pid = getpid();
+
+
+    fprintf(logFile,"%lf %lf %ldfclose %p = %d\n",called_time,exec_time,(long)pid,stream,ret);
 
     return ret;
 }
@@ -170,7 +174,9 @@ int fgetc(FILE *__stream)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fgetc %p = %d\n",called_time,exec_time,__stream,ret);
+    pid_t pid = getpid();
+
+    fprintf(logFile,"%lf %lf %ld fgetc %p = %d\n",called_time,exec_time,(long)pid,__stream,ret);
 
     return ret;
 }
@@ -191,7 +197,9 @@ int fputc(int character, FILE *stream)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fputc %d %p = %d\n",called_time,exec_time,character,stream,ret);
+    pid_t pid = getpid();
+
+    fprintf(logFile,"%lf %lf %ld fputc %d %p = %d\n",called_time,exec_time,(long)pid,character,stream,ret);
 
     return ret;
 }
@@ -212,7 +220,9 @@ size_t fread( void * ptr, size_t size, size_t count, FILE * stream )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fread %zu %zu %p = %zu\n",called_time,exec_time,size,count,stream,ret);
+    pid_t pid = getpid();
+
+    fprintf(logFile,"%lf %lf %ld fread %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,size,count,stream,ret);
 
     return ret;
 }
@@ -231,7 +241,9 @@ size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fwrite %zu %zu %p = %zu\n",called_time,exec_time,size,count,stream,ret);
+    pid_t pid = getpid();
+
+    fprintf(logFile,"%lf %lf %ld fwrite %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,size,count,stream,ret);
 
     return ret;
 }
@@ -251,7 +263,9 @@ int fsetpos ( FILE * stream, const fpos_t * pos )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fsetpos %p = %d\n",called_time,exec_time,stream,ret);
+    pid_t pid = getpid();
+
+    fprintf(logFile,"%lf %lf %ld fsetpos %p = %d\n",called_time,exec_time,(long)pid,stream,ret);
 
     return ret;
 }
@@ -270,7 +284,9 @@ int fgetpos ( FILE * stream, fpos_t * pos )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fgetpos %p = %d\n",called_time,exec_time,stream,ret);
+    pid_t pid = getpid();
+
+    fprintf(logFile,"%lf %lf %ld fgetpos %p = %d\n",called_time,exec_time,(long)pid,stream,ret);
 
     return ret;
 }
@@ -289,7 +305,9 @@ char * fgets ( char * str, int num, FILE * stream )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fgets %s %d %p = %s\n",called_time,exec_time,str,num,stream,ret);
+    fprintf(logFile,"%lf %lf %ld fgets %s %d %p = %s\n",called_time,exec_time,(long)pid,str,num,stream,ret);
+
+    pid_t pid = getpid();
 
     return ret;
 
@@ -309,7 +327,9 @@ int fputs ( const char * str, FILE * stream )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fputs %s %p = %d\n",called_time,exec_time,str,stream,ret);
+    fprintf(logFile,"%lf %lf %ld fputs %s %p = %d\n",called_time,exec_time,(long)pid,str,stream,ret);
+
+    pid_t pid = getpid();
 
     return ret;
 
@@ -329,7 +349,9 @@ int fseek ( FILE * stream, long int offset, int origin )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf fseek %p %ld %d = %d\n",called_time,exec_time,stream,offset,origin,ret);
+    fprintf(logFile,"%lf %lf %ld fseek %p %ld %d = %d\n",called_time,exec_time,(long)pid,stream,offset,origin,ret);
+
+    pid_t pid = getpid(); 
 
     return ret;
 }
@@ -348,7 +370,9 @@ long int ftell ( FILE * stream )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf ftell %p = %ld\n",called_time,exec_time,stream,ret);
+    fprintf(logFile,"%lf %lf %ld ftell %p = %ld\n",called_time,exec_time,(long)pid,stream,ret);
+
+    pid_t pid = getpid();
 
     return ret;
 }
@@ -367,7 +391,9 @@ int feof ( FILE * stream )
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf feof %p = %d\n",called_time,exec_time,stream,ret);
+    fprintf(logFile,"%lf %lf %ld feof %p = %d\n",called_time,exec_time,(long)pid,stream,ret);
+
+    pid_t pid = getpid();
 
     return ret;
 }
@@ -395,7 +421,9 @@ int open(const char *pathname, int flags, ...)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf open %s %d = %d\n",called_time,exec_time,pathname,flags,ret);
+    fprintf(logFile,"%lf %lf %ld open %s %d = %d\n",called_time,exec_time,(long)pid,pathname,flags,ret);
+
+    pid_t pid = getpid();
 
     return ret;
 	
@@ -416,7 +444,9 @@ ssize_t read(int fd, void *buf, size_t count)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf read %d %p %zu = %zu\n",called_time,exec_time,fd,buf,count,ret);
+    fprintf(logFile,"%lf %lf %ld read %d %p %zu = %zu\n",called_time,exec_time,(long)pid,fd,buf,count,ret);
+
+    pid_t pid = getpid();
 
     return ret;
 }
@@ -434,7 +464,9 @@ ssize_t write(int fd, const void *buf, size_t count)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf write %d %p %zu = %zu\n",called_time,exec_time,fd,buf,count,ret);
+    fprintf(logFile,"%lf %lf %ld write %d %p %zu = %zu\n",called_time,exec_time,(long)pid,fd,buf,count,ret);
+
+    pid_t pid = getpid();
 
     return ret;
     
@@ -455,7 +487,9 @@ ssize_t pread(int fd, void *buf, size_t count, off_t offset)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf pread %d %p %zu %ld = %zu\n",called_time,exec_time,fd,buf,count,offset,ret);
+    fprintf(logFile,"%lf %lf %ld pread %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,fd,buf,count,offset,ret);
+
+    pid_t pid = getpid();
 
     return ret;
 
@@ -477,7 +511,9 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf pwrite %d %p %zu %ld = %zu\n",called_time,exec_time,fd,buf,count,offset,ret);
+    fprintf(logFile,"%lf %lf %ld pwrite %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,fd,buf,count,offset,ret);
+    
+    pid_t pid = getpid();
 
     return ret;
     
@@ -497,7 +533,9 @@ int close(int fd)
 
     double exec_time = (double)(end-start)/(double)(CLOCKS_PER_SEC);
 
-    fprintf(logFile,"%lf %lf close %d = %d\n",called_time,exec_time,fd,ret);
+    pid_t pid = getpid();
+
+    fprintf(logFile,"%lf %lf %ld close %d = %d\n",called_time,exec_time,(long)pid,fd,ret);
 
     return ret;
 }
