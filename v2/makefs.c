@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main (int argc, char *argv[])
 {
@@ -9,8 +10,16 @@ int main (int argc, char *argv[])
 		newPath = argv[1];
 	}
 
+	FILE* log = fopen("log.txt","r");
 
-	printf("%s\n", newPath);
+	double prog_time, exec_time;
+	while(fscanf(log,"%lf %lf %s ",prog_time,exec_time,newPath) != EOF)
+	{
+		printf("%lf %lf %s\n",prog_time,exec_time);
+
+	}
+	
+	
 
 	return 0;
 
