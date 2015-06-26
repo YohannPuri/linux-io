@@ -243,7 +243,7 @@ size_t fread( void * ptr, size_t size, size_t count, FILE * stream )
 
     fprintf(logFile,"%lf %lf %ld %ld fread %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
 
-    fprintf(statFile, "fread %lf\n",(double)((double)(count*size)/(double)exec_time);
+    fprintf(statFile, "fread %lf\n",(double)((double)(count*size)/(double)exec_time));
 
     return ret;
 }
@@ -268,7 +268,7 @@ size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream )
 
     fprintf(logFile,"%lf %lf %ld %ld fwrite %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
 
-    fprintf(statFile, "fwrite %lf\n",(double)((double)(count*size)/(double)exec_time);
+    fprintf(statFile, "fwrite %lf\n",(double)((double)(count*size)/(double)exec_time));
 
     return ret;
 }
@@ -497,7 +497,7 @@ ssize_t read(int fd, void *buf, size_t count)
 
     fprintf(logFile,"%lf %lf %ld %ld read %d %p %zu = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
 
-    fprintf(statFile, "read %lf\n",(double)((double)(count)/(double)exec_time);
+    fprintf(statFile, "read %lf\n",(double)((double)(count)/(double)exec_time));
 
 
     return ret;
@@ -522,7 +522,7 @@ ssize_t write(int fd, const void *buf, size_t count)
 
     fprintf(logFile,"%lf %lf %ld %ld write %d %p %zu = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
 
-    fprintf(statFile, "write %lf\n",(double)((double)(count)/(double)exec_time);
+    fprintf(statFile, "write %lf\n",(double)((double)(count)/(double)exec_time));
 
 
     return ret;
@@ -550,7 +550,7 @@ ssize_t pread(int fd, void *buf, size_t count, off_t offset)
 
     fprintf(logFile,"%lf %lf %ld %ld pread %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
 
-    fprintf(statFile, "pread %lf\n",(double)((double)(count)/(double)exec_time);
+    fprintf(statFile, "pread %lf\n",(double)((double)(count)/(double)exec_time));
 
     return ret;
 
@@ -578,7 +578,7 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 
     fprintf(logFile,"%lf %lf %ld %ld pwrite %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
     
-    fprintf(statFile, "pwrite %lf\n",(double)((double)(count)/(double)exec_time);
+    fprintf(statFile, "pwrite %lf\n",(double)((double)(count)/(double)exec_time));
 
     return ret;
     
