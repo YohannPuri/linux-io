@@ -101,7 +101,7 @@ static void wrap_init(void)
     //printf("START\n");
 
     logFile = _fopen("log.txt","w");
-    statFile = _fopen("stat.txt"."w");
+    statFile = _fopen("stat.txt","w");
 
     program_start = clock();           // Set global program clock
 
@@ -191,7 +191,7 @@ int fgetc(FILE *__stream)
 
     fprintf(logFile,"%lf %lf %ld %ld fgetc %p = %d\n",called_time,exec_time,(long)pid,(long)tid,__stream,ret);
 
-    fprintf(statFile, "fgetc %lf\n",(double)(1/exec_time);
+    fprintf(statFile, "fgetc %lf\n",(double)(1/exec_time));
     return ret;
 }
 
@@ -217,7 +217,7 @@ int fputc(int character, FILE *stream)
 
     fprintf(logFile,"%lf %lf %ld %ld fputc %d %p = %d\n",called_time,exec_time,(long)pid,(long)tid,character,stream,ret);
 
-    fprintf(statFile, "fputc %lf\n",(double)(1/exec_time);
+    fprintf(statFile, "fputc %lf\n",(double)(1/exec_time));
     return ret;
 }
 
