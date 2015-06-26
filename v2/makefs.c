@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 int main (int argc, char *argv[])
 {
@@ -15,7 +16,6 @@ int main (int argc, char *argv[])
 
 	double prog_time = 0.0, exec_time = 0.0;
 	int pid = 0, tid = 0;
-	unsigned int delay = 0;
 	useconds_t usec = 0;
 
 	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,newPath)!=EOF)
