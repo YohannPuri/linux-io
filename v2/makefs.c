@@ -15,12 +15,11 @@ int main (int argc, char *argv[])
 	double prog_time = 0.0, exec_time = 0.0;
 	int pid = 0, tid = 0;
 
-	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,newPath) != EOF)
-	{
+	fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,newPath);
+	
 		printf("%lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,newPath);
-	}
 	
-	
+	fclose(log);
 
 	return 0;
 
