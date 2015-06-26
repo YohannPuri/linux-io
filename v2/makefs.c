@@ -13,9 +13,10 @@ int main (int argc, char *argv[])
 	FILE* log = fopen("log.txt","r");
 
 	double prog_time, exec_time;
-	while(fscanf(log,"%lf %lf %s ",prog_time,exec_time,newPath) != EOF)
+
+	while(fscanf(log,"%lf %lf %s",prog_time,exec_time,newPath) != EOF)
 	{
-		printf("%lf %lf %s\n",prog_time,exec_time);
+		printf("%lf %lf %s\n",prog_time,exec_time,newPath);
 
 	}
 	
