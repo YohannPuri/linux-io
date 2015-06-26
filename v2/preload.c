@@ -16,7 +16,7 @@
 // Global Variable to hold clock ticks at program start
 static clock_t program_start;
 static FILE *logFile;
-static FILE *statFile
+static FILE *statFile;
 
 // Defining a new constructor and destructor
 static void wrap_init(void) __attribute__((constructor));
