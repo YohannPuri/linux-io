@@ -16,7 +16,7 @@ int main (int argc, char *argv[])
 
 	while(fscanf(log,"%lf %lf %s",&prog_time,&exec_time,newPath) != EOF)
 	{
-		printf("%lf %lf %s\n",&prog_time,&exec_time,newPath);
+		printf("%lf %lf %s\n",prog_time,exec_time,newPath);
 
 	}
 	
