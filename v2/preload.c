@@ -16,6 +16,7 @@
 // Global Variable to hold clock ticks at program start
 static clock_t program_start;
 static FILE *logFile;
+static FILE *statFile
 
 // Defining a new constructor and destructor
 static void wrap_init(void) __attribute__((constructor));
@@ -49,7 +50,6 @@ static int (*_open)(const char *, int, mode_t) = NULL;
 static ssize_t (*_read)(int fd, void *buf, size_t count) = NULL;
 static ssize_t (*_write)(int fd, const void *buf, size_t count) = NULL;
 static ssize_t (*_pread)(int fd, void *buf, size_t count, off_t offset) = NULL;
-
 static ssize_t (*_pwrite)(int fd, const void *buf, size_t count, off_t offset) = NULL;
 //static int (*_open64)(const char *, int, mode_t) = NULL;
 
@@ -98,13 +98,14 @@ static void wrap_init(void)
     _pwrite = dlsym(RTLD_NEXT,"pwrite");
     //_creat = dlsym(RTLD_NEXT,"creat");
 
-    printf("START\n");
+    //printf("START\n");
 
     logFile = _fopen("log.txt","w");
+    statFile = _fopen("stat.txt"."w");
 
     program_start = clock();           // Set global program clock
 
-    printf("%lf      ",(double)program_start/CLOCKS_PER_SEC);
+    //printf("%lf      ",(double)program_start/CLOCKS_PER_SEC);
 
 }
 
@@ -113,6 +114,7 @@ static void wrap_init(void)
 static void wrap_deinit(void)
 {
     _fclose(logFile);
+    _fclose(statFile);
     printf("End\n");
 }
 
@@ -189,6 +191,7 @@ int fgetc(FILE *__stream)
 
     fprintf(logFile,"%lf %lf %ld %ld fgetc %p = %d\n",called_time,exec_time,(long)pid,(long)tid,__stream,ret);
 
+    fprintf(statFile, "fgetc %lf\n",(double)(1/exec_time);
     return ret;
 }
 
@@ -214,6 +217,7 @@ int fputc(int character, FILE *stream)
 
     fprintf(logFile,"%lf %lf %ld %ld fputc %d %p = %d\n",called_time,exec_time,(long)pid,(long)tid,character,stream,ret);
 
+    fprintf(statFile, "fputc %lf\n",(double)(1/exec_time);
     return ret;
 }
 
@@ -239,6 +243,8 @@ size_t fread( void * ptr, size_t size, size_t count, FILE * stream )
 
     fprintf(logFile,"%lf %lf %ld %ld fread %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
 
+    fprintf(statFile, "fread %lf\n",(double)((double)(count*size)/(double)exec_time);
+
     return ret;
 }
 
@@ -261,6 +267,8 @@ size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream )
     pid_t tid = gettid();
 
     fprintf(logFile,"%lf %lf %ld %ld fwrite %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
+
+    fprintf(statFile, "fwrite %lf\n",(double)((double)(count*size)/(double)exec_time);
 
     return ret;
 }
@@ -489,6 +497,8 @@ ssize_t read(int fd, void *buf, size_t count)
 
     fprintf(logFile,"%lf %lf %ld %ld read %d %p %zu = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
 
+    fprintf(statFile, "read %lf\n",(double)((double)(count)/(double)exec_time);
+
 
     return ret;
 }
@@ -511,6 +521,8 @@ ssize_t write(int fd, const void *buf, size_t count)
     pid_t tid = gettid();
 
     fprintf(logFile,"%lf %lf %ld %ld write %d %p %zu = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
+
+    fprintf(statFile, "write %lf\n",(double)((double)(count)/(double)exec_time);
 
 
     return ret;
@@ -538,6 +550,7 @@ ssize_t pread(int fd, void *buf, size_t count, off_t offset)
 
     fprintf(logFile,"%lf %lf %ld %ld pread %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
 
+    fprintf(statFile, "pread %lf\n",(double)((double)(count)/(double)exec_time);
 
     return ret;
 
@@ -565,6 +578,7 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 
     fprintf(logFile,"%lf %lf %ld %ld pwrite %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
     
+    fprintf(statFile, "pwrite %lf\n",(double)((double)(count)/(double)exec_time);
 
     return ret;
     
