@@ -9,8 +9,10 @@ int main (int argc, char *argv[])
 	char command[20];
 	char str[100];
 	char filemode;
+	char file_mode[10];
 	void* file_ptr;
 	int ret;
+	int mode;
 	if(argc != 1)
 	{
 		newPath = argv[1];
@@ -40,7 +42,7 @@ int main (int argc, char *argv[])
 				fscanf(log,"%p %d", &file_ptr, &ret);
 				printf("\n %p %d \n", file_ptr, ret);
 			}
-			if(command[1] == 'o')
+			else if(command[1] == 'o')
 			{
 				// Has to be fopen
 
@@ -50,6 +52,21 @@ int main (int argc, char *argv[])
 
 				fprintf(program,"fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
 
+			}
+		}
+		else if(command[0]=='o')
+		{
+			// Has to be open or open64
+			if(command[4]!='6')
+			{
+				fscanf(log,"%s %d %d",str,&mode,&ret);
+				fgetc(log);
+				if(mode == 1)
+					file_mode = "O_WRONLY";
+				else
+					file_mode = "O_RONLY";
+
+				fprintf(program,"open(\"%s/%s\",\"%s\");\n",newPath,str,file_mode);
 			}
 		}
 
