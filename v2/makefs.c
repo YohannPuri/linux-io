@@ -174,7 +174,7 @@ int main (int argc, char *argv[])
 		{
 			// Has to be close...
 
-			fscanf(log,"%d %d"&filedes,&ret);
+			fscanf(log,"%d %d",&filedes,&ret);
 			fprintf(log,"close(%d);\n",filedes);
 			fgetc(log);
 		}
