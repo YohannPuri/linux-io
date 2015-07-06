@@ -116,7 +116,7 @@ int main (int argc, char *argv[])
 			{
 				fscanf(log,"%d %p %d %d",&filedes,&file_ptr,&bts,&ret);
 				int j = 0;
-				for(j=0;j<file=file_count;j++)
+				for(j=0;j<file_count;j++)
 				{
 					if(fs[j].fd == filedes)
 						break;
@@ -124,11 +124,13 @@ int main (int argc, char *argv[])
 
 				fs[j].bytes_written += ret;
 				fprintf(program,"char buffer[%d] = \"",ret);
-				for(int k = 0; k< ret; k++)
+				int k = 0;
+				for(k = 0; k< ret; k++)
 				{
 					fprintf(program,"a");
 				}
-				fprintf(program,"\";"\n);
+
+				fprintf(program,"\";\n");
 				fprintf(program,"write(%d,buffer,%d);\n",filedes,ret);
 
 				fgetc(log);
