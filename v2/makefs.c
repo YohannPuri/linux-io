@@ -25,7 +25,7 @@ int main (int argc, char *argv[])
 
 	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,command)!=EOF)
 	{
-		printf("\n \n %lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
+		//printf("\n \n %lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
 		usec = (unsigned int)(prog_time*1000000);
 		fprintf(program, "usleep(%u);\n", (unsigned int)usec);
 
@@ -45,9 +45,10 @@ int main (int argc, char *argv[])
 				// Has to be fopen
 
 				fscanf(log," %s %c %p\n",str,&filemode,&file_ptr);
-				fflush(stdout);
-				printf("%s %c %p \n",str,filemode,file_ptr);
+				//printf("%s %c %p \n",str,filemode,file_ptr);
 				fgetc(log);
+
+				fprintf(program,"fopen(\"%s\",\"%c\");\n",str,filemode);
 
 			}
 		}
