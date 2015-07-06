@@ -27,7 +27,7 @@ int main (int argc, char *argv[])
 	{
 		printf("%lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
 		usec = (unsigned int)(prog_time*1000000);
-		fprintf(program, "usleep(%u)\n;", (unsigned int)usec);
+		fprintf(program, "usleep(%u);\n", (unsigned int)usec);
 
 		if(command[0]=='f')
 		{
@@ -44,8 +44,8 @@ int main (int argc, char *argv[])
 			{
 				// Has to be fopen
 
-				fscanf(log,"%s %c %p",str,&filemode,&file_ptr);
-				printf("%s %c %p",str,filemode,file_ptr);
+				fscanf(log,"%s %c %p\n",str,&filemode,&file_ptr);
+				printf("\n %s %c %p",str,filemode,file_ptr);
 
 			}
 		}
