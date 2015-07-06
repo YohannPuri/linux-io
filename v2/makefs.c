@@ -3,8 +3,36 @@
 #include <string.h>
 #include <unistd.h>
 
+
+typedef struct fs_file{
+
+	char* filename;
+	uint32_t bytes_read;
+	uint32_t bytes_written;
+	uint32_t fd;
+	void * stream_pointer;
+
+}
 int main (int argc, char *argv[])
 {
+
+	// Data we are trying to maintain
+	/*
+		We need filenames that we are trying to create...
+		How many bytes are written to the file..
+		How many bytes are read from the file..
+		Make sure that many trash bytes exist
+		Keep track of file descriptors for each opened file
+		Keep track of file stream pointers for each opened file
+	
+	*/
+
+
+	fs_file *fs = malloc(sizeof(fs_file));
+	int file_count = 0;
+	int size = 1;
+
+	// Variables for palceholding
 	char *newPath;
 	char command[20];
 	char str[100];
@@ -53,6 +81,7 @@ int main (int argc, char *argv[])
 				fgetc(log);
 
 				fprintf(program,"fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
+
 
 			}
 		}
