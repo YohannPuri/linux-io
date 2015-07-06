@@ -43,6 +43,7 @@ int main (int argc, char *argv[])
 	int mode;
 	int filedes;
 	int bts;
+	int offset;
 
 
 
@@ -112,7 +113,7 @@ int main (int argc, char *argv[])
 		{
 
 			// Has to be write or write64
-			if(command[5]!=6)
+			if(command[5]!='6')
 			{
 				fscanf(log,"%d %p %d %d",&filedes,&file_ptr,&bts,&ret);
 				int j = 0;
@@ -134,6 +135,39 @@ int main (int argc, char *argv[])
 				fprintf(program,"write(%d,buffer,%d);\n",filedes,ret);
 
 				fgetc(log);
+			}
+		}
+
+		else if(command[0] == 'p')
+		{
+			if(command[1] == 'w')
+			{
+				// pwrite or pwrite64
+				if(command[6]!='6')
+				{
+					// Has to be pwrite
+				fscanf(log,"%d %p %d %d %d",&filedes,&file_ptr,&bts,&offset,&ret);
+
+				int j = 0;
+				for(j=0;j<file_count;j++)
+				{
+					if(fs[j].fd == filedes)
+						break;
+				}
+
+				fs[j].bytes_written += ret;
+				fprintf(program,"char buffer2[%d] = \"",ret);
+				int k = 0;
+				for(k = 0; k< ret; k++)
+				{
+					fprintf(program,"a");
+				}
+
+				fprintf(program,"\";\n");
+				fprintf(program,"pwrite(%d,buffer2,%d,%d);\n",filedes,ret,offset);
+
+				fgetc(log);
+				}
 			}
 		}
 
