@@ -44,8 +44,8 @@ int main (int argc, char *argv[])
 			{
 				// Has to be fopen
 
-				fscanf(log,"%s %c %p\n",str,&filemode,&file_ptr);
-				printf("\n %s %c %p",str,filemode,file_ptr);
+				fscanf(log," %s %c %p\n",str,&filemode,&file_ptr);
+				printf("%s %c %p",str,filemode,file_ptr);
 
 			}
 		}
