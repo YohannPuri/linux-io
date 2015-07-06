@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
 	*/
 
 
-	fs_file *fs = malloc(sizeof(*fs));
+	struct fs_file *fs = malloc(sizeof(*fs));
 	int file_count = 0;
 	int size = 1;
 
