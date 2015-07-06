@@ -100,7 +100,7 @@ int main (int argc, char *argv[])
 				fscanf(log,"%s %d %d",str,&mode,&ret);
 				fgetc(log);
 
-				fprintf(program,"open(\"%s/%s\",\"%s\");\n",newPath,str,mode);
+				fprintf(program,"open(\"%s/%s\",\"%d\");\n",newPath,str,mode);
 			}
 		}
 
