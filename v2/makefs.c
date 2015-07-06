@@ -6,7 +6,7 @@
 int main (int argc, char *argv[])
 {
 	//char *newPath;
-	char *command;
+	char command[20];
 	char *str;
 	char filemode;
 	void* file_ptr;
