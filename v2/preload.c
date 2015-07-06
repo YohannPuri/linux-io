@@ -139,7 +139,7 @@ FILE* fopen(const char *pathname,const char *mode)
 
     pid_t pid = getpid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fopen %s %s = %p \n",called_time,exec_time,(long)pid,(long)tid,pathname,mode,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fopen %s %s %p \n",called_time,exec_time,(long)pid,(long)tid,pathname,mode,ret);
 
     return ret;
 }
@@ -164,7 +164,7 @@ int fclose(FILE *stream)
 
     pid_t pid = getpid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fclose %p = %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fclose %p %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
 
     return ret;
 }
@@ -189,7 +189,7 @@ int fgetc(FILE *__stream)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fgetc %p = %d\n",called_time,exec_time,(long)pid,(long)tid,__stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fgetc %p %d\n",called_time,exec_time,(long)pid,(long)tid,__stream,ret);
 
     fprintf(statFile, "fgetc %lf\n",(double)(1/exec_time));
     return ret;
@@ -215,7 +215,7 @@ int fputc(int character, FILE *stream)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fputc %d %p = %d\n",called_time,exec_time,(long)pid,(long)tid,character,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fputc %d %p %d\n",called_time,exec_time,(long)pid,(long)tid,character,stream,ret);
 
     fprintf(statFile, "fputc %lf\n",(double)(1/exec_time));
     return ret;
@@ -241,7 +241,7 @@ size_t fread( void * ptr, size_t size, size_t count, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fread %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fread %zu %zu %p %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
 
     fprintf(statFile, "fread %lf\n",(double)((double)(count*size)/(double)exec_time));
 
@@ -266,7 +266,7 @@ size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fwrite %zu %zu %p = %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fwrite %zu %zu %p %zu\n",called_time,exec_time,(long)pid,(long)tid,size,count,stream,ret);
 
     fprintf(statFile, "fwrite %lf\n",(double)((double)(count*size)/(double)exec_time));
 
@@ -292,7 +292,7 @@ int fsetpos ( FILE * stream, const fpos_t * pos )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fsetpos %p = %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fsetpos %p %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
 
     return ret;
 }
@@ -315,7 +315,7 @@ int fgetpos ( FILE * stream, fpos_t * pos )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fgetpos %p = %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fgetpos %p %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
 
     return ret;
 }
@@ -338,7 +338,7 @@ char * fgets ( char * str, int num, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fgets %s %d %p = %s\n",called_time,exec_time,(long)pid,(long)tid,str,num,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fgets %s %d %p %s\n",called_time,exec_time,(long)pid,(long)tid,str,num,stream,ret);
 
 
     return ret;
@@ -363,7 +363,7 @@ int fputs ( const char * str, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fputs %s %p = %d\n",called_time,exec_time,(long)pid,(long)tid,str,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fputs %s %p %d\n",called_time,exec_time,(long)pid,(long)tid,str,stream,ret);
 
 
     return ret;
@@ -388,7 +388,7 @@ int fseek ( FILE * stream, long int offset, int origin )
 
     pid_t tid = gettid(); 
 
-    fprintf(logFile,"%lf %lf %ld %ld fseek %p %ld %d = %d\n",called_time,exec_time,(long)pid,(long)tid,stream,offset,origin,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fseek %p %ld %d %d\n",called_time,exec_time,(long)pid,(long)tid,stream,offset,origin,ret);
 
 
     return ret;
@@ -412,7 +412,7 @@ long int ftell ( FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld ftell %p = %ld\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld ftell %p %ld\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
 
 
     return ret;
@@ -436,7 +436,7 @@ int feof ( FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld feof %p = %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld feof %p %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
 
 
     return ret;
@@ -469,7 +469,7 @@ int open(const char *pathname, int flags, ...)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld open %s %d = %d\n",called_time,exec_time,(long)pid,(long)tid,pathname,flags,ret);
+    fprintf(logFile,"%lf %lf %ld %ld open %s %d %d\n",called_time,exec_time,(long)pid,(long)tid,pathname,flags,ret);
 
 
     return ret;
@@ -495,7 +495,7 @@ ssize_t read(int fd, void *buf, size_t count)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld read %d %p %zu = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
+    fprintf(logFile,"%lf %lf %ld %ld read %d %p %zu %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
 
     fprintf(statFile, "read %lf\n",(double)((double)(count)/(double)exec_time));
 
@@ -520,7 +520,7 @@ ssize_t write(int fd, const void *buf, size_t count)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld write %d %p %zu = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
+    fprintf(logFile,"%lf %lf %ld %ld write %d %p %zu %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,ret);
 
     fprintf(statFile, "write %lf\n",(double)((double)(count)/(double)exec_time));
 
@@ -548,7 +548,7 @@ ssize_t pread(int fd, void *buf, size_t count, off_t offset)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld pread %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
+    fprintf(logFile,"%lf %lf %ld %ld pread %d %p %zu %ld %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
 
     fprintf(statFile, "pread %lf\n",(double)((double)(count)/(double)exec_time));
 
@@ -576,7 +576,7 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld pwrite %d %p %zu %ld = %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
+    fprintf(logFile,"%lf %lf %ld %ld pwrite %d %p %zu %ld %zu\n",called_time,exec_time,(long)pid,(long)tid,fd,buf,count,offset,ret);
     
     fprintf(statFile, "pwrite %lf\n",(double)((double)(count)/(double)exec_time));
 
@@ -602,7 +602,7 @@ int close(int fd)
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld close %d = %d\n",called_time,exec_time,(long)pid,(long)tid,fd,ret);
+    fprintf(logFile,"%lf %lf %ld %ld close %d %d\n",called_time,exec_time,(long)pid,(long)tid,fd,ret);
 
     return ret;
 }
