@@ -45,6 +45,7 @@ int main (int argc, char *argv[])
 				// Has to be fopen
 
 				fscanf(log," %s %c %p\n",str,&filemode,&file_ptr);
+				fflush(stdout);
 				printf("%s %c %p",str,filemode,file_ptr);
 				fgetc(log);
 
