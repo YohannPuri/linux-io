@@ -25,7 +25,7 @@ int main (int argc, char *argv[])
 
 	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,command)!=EOF)
 	{
-		printf("%lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
+		printf("\n \n %lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
 		usec = (unsigned int)(prog_time*1000000);
 		fprintf(program, "usleep(%u);\n", (unsigned int)usec);
 
