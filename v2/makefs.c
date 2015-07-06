@@ -41,6 +41,11 @@ int main (int argc, char *argv[])
 	void* file_ptr;
 	int ret;
 	int mode;
+	int filedes;
+	int bts;
+
+
+
 	if(argc != 1)
 	{
 		newPath = argv[1];
@@ -100,7 +105,33 @@ int main (int argc, char *argv[])
 				fscanf(log,"%s %d %d",str,&mode,&ret);
 				fgetc(log);
 
-				fprintf(program,"open(\"%s/%s\",\"%d\");\n",newPath,str,mode);
+				fprintf(program,"open(\"%s/%s\",%d);\n",newPath,str,mode);
+			}
+		}
+		else if(command[0]=='w')
+		{
+
+			// Has to be write or write64
+			if(command[5]!=6)
+			{
+				fscanf(log,"%d %p %d %d",&filedes,&file_ptr,&bts,&ret);
+				int j = 0;
+				for(j=0;j<file=file_count;j++)
+				{
+					if(fs[j].fd == filedes)
+						break;
+				}
+
+				fs[j].bytes_written += ret;
+				fprintf(program,"char buffer[%d] = \"",ret);
+				for(int k = 0; k< ret; k++)
+				{
+					fprintf(program,"a");
+				}
+				fprintf(program,"\";"\n);
+				fprintf(program,"write(%d,buffer,%d);\n",filedes,ret);
+
+				fgetc(log);
 			}
 		}
 
