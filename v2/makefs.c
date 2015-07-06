@@ -9,7 +9,9 @@ int main (int argc, char *argv[])
 	char command[20];
 	char str[100];
 	char filemode;
-	char file_mode[10];
+	char* file_mode[10];
+	file_mode[1] = malloc(10*sizeof(char));
+	file_mode[1] = "WRONLY";
 	void* file_ptr;
 	int ret;
 	int mode;
@@ -61,12 +63,8 @@ int main (int argc, char *argv[])
 			{
 				fscanf(log,"%s %d %d",str,&mode,&ret);
 				fgetc(log);
-				if(mode == 1)
-					file_mode = "O_WRONLY";
-				else
-					file_mode = "O_RONLY";
 
-				fprintf(program,"open(\"%s/%s\",\"%s\");\n",newPath,str,file_mode);
+				fprintf(program,"open(\"%s/%s\",\"%s\");\n",newPath,str,file_mode[mode]);
 			}
 		}
 
