@@ -6,8 +6,8 @@
 int main (int argc, char *argv[])
 {
 	//char *newPath;
-	char command[20] = "BLANK";
-	char *str;
+	char command[20];
+	char str[100];
 	char filemode;
 	void* file_ptr;
 	int ret;
