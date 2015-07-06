@@ -46,6 +46,7 @@ int main (int argc, char *argv[])
 
 				fscanf(log," %s %c %p\n",str,&filemode,&file_ptr);
 				printf("%s %c %p",str,filemode,file_ptr);
+				fgetc(log);
 
 			}
 		}
