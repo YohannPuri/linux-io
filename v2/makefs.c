@@ -7,12 +7,12 @@
 typedef struct fs_file{
 
 	char* filename;
-	uint32_t bytes_read;
-	uint32_t bytes_written;
-	uint32_t fd;
+	unsigned int bytes_read;
+	unsigned int bytes_written;
+	unsigned int fd;
 	void * stream_pointer;
 
-}
+};
 int main (int argc, char *argv[])
 {
 
