@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 
-typedef struct fs_file{
+typedef struct{
 
 	char* filename;
 	unsigned int bytes_read;
@@ -12,7 +12,7 @@ typedef struct fs_file{
 	unsigned int fd;
 	void * stream_pointer;
 
-};
+}fs_file;
 int main (int argc, char *argv[])
 {
 
@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
 	*/
 
 
-	struct fs_file *fs = malloc(sizeof(*fs));
+	fs_file *fs = malloc(sizeof(*fs));
 	int file_count = 0;
 	int size = 1;
 
