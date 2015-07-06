@@ -74,7 +74,7 @@ int main (int argc, char *argv[])
 				// Has to be fclose
 
 				fscanf(log,"%p %d", &file_ptr, &ret);
-				printf("\n %p %d \n", file_ptr, ret);
+				//fprintf(log,"fclose();\n", file_ptr, ret);
 			}
 			else if(command[1] == 'o')
 			{
@@ -170,7 +170,14 @@ int main (int argc, char *argv[])
 				}
 			}
 		}
+		else if(command[0] == 'c')
+		{
+			// Has to be close...
 
+			fscanf(log,"%d %d"&filedes,&ret);
+			fprintf(log,"close(%d);\n",filedes);
+			fgetc(log);
+		}
 
 	}
 	fclose(log);
