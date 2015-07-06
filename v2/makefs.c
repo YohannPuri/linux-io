@@ -37,9 +37,7 @@ int main (int argc, char *argv[])
 	char command[20];
 	char str[100];
 	char filemode;
-	char* file_mode[10];
-	file_mode[1] = malloc(10*sizeof(char));
-	file_mode[1] = "WRONLY";
+	
 	void* file_ptr;
 	int ret;
 	int mode;
@@ -82,6 +80,15 @@ int main (int argc, char *argv[])
 
 				fprintf(program,"fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
 
+				if(file_count<size)
+				{
+					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
+					strcpy(fs[file_count].filename,str);
+					fs[file_count].bytes_written = 0;
+					fs[file_count].bytes_read = 0;
+					fs[file_count].stream_pointer = file_ptr;
+					file_count++;
+				}
 
 			}
 		}
@@ -93,7 +100,7 @@ int main (int argc, char *argv[])
 				fscanf(log,"%s %d %d",str,&mode,&ret);
 				fgetc(log);
 
-				fprintf(program,"open(\"%s/%s\",\"%s\");\n",newPath,str,file_mode[mode]);
+				fprintf(program,"open(\"%s/%s\",\"%s\");\n",newPath,str,mode);
 			}
 		}
 
