@@ -5,17 +5,17 @@
 
 int main (int argc, char *argv[])
 {
-	//char *newPath;
+	char *newPath;
 	char command[20];
 	char str[100];
 	char filemode;
 	void* file_ptr;
 	int ret;
-	/*if(argc != 1)
+	if(argc != 1)
 	{
 		newPath = argv[1];
 	}
-*/
+
 	FILE* log = fopen("log.txt","r");
 	FILE* program = fopen("program.c","w");
 
@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
 				//printf("%s %c %p \n",str,filemode,file_ptr);
 				fgetc(log);
 
-				fprintf(program,"fopen(\"%s\",\"%c\");\n",str,filemode);
+				fprintf(program,"fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
 
 			}
 		}
