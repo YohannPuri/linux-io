@@ -37,14 +37,14 @@ int main (int argc, char *argv[])
 			{
 				// Has to be fclose
 
-				fscanf(log,"%p %d", file_ptr, &ret);
-				printf("\n %p %d" \n, *file_ptr, &ret);
+				fscanf(log,"%p %d", &file_ptr, &ret);
+				printf("\n %p %d \n", *file_ptr, &ret);
 			}
 			if(command[1] == 'o')
 			{
 				// Has to be fopen
 
-				fscanf(log,"%s %c %p",str,&filemode,file_ptr);
+				fscanf(log,"%s %c %p",str,&filemode,&file_ptr);
 				printf("%s %c %p",str,filemode,*file_ptr);
 
 			}
