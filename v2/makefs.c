@@ -5,17 +5,17 @@
 
 int main (int argc, char *argv[])
 {
-	char *newPath;
+	//char *newPath;
 	char *command;
 	char *str;
 	char filemode;
 	void* file_ptr;
 	int ret;
-	if(argc != 1)
+	/*if(argc != 1)
 	{
 		newPath = argv[1];
 	}
-
+*/
 	FILE* log = fopen("log.txt","r");
 	FILE* program = fopen("program.c","w");
 
@@ -38,14 +38,14 @@ int main (int argc, char *argv[])
 				// Has to be fclose
 
 				fscanf(log,"%p %d", &file_ptr, &ret);
-				printf("\n %p %d \n", *file_ptr, &ret);
+				printf("\n %p %d \n", file_ptr, &ret);
 			}
 			if(command[1] == 'o')
 			{
 				// Has to be fopen
 
 				fscanf(log,"%s %c %p",str,&filemode,&file_ptr);
-				printf("%s %c %p",str,filemode,*file_ptr);
+				printf("%s %c %p",str,filemode,file_ptr);
 
 			}
 		}
