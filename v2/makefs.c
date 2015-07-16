@@ -98,13 +98,20 @@ int main (int argc, char *argv[])
 
 				if(file_count<size)
 				{
-					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
+					// No need to reallocate
+				}
+				else
+				{
+					size = size*2;
+					fs = realloc(size * sizeof(*fs));
+				}
+
+				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 					strcpy(fs[file_count].filename,str);
 					fs[file_count].bytes_written = 0;
 					fs[file_count].bytes_read = 0;
 					fs[file_count].stream_pointer = file_ptr;
 					file_count++;
-				}
 
 			}
 			else if(command[1] == 'g')
@@ -195,6 +202,15 @@ int main (int argc, char *argv[])
 
 					fprintf(program,"int r2 = fsetpos(%s,pos2);\n",fs[k].filename);
 				}
+				else
+				{
+					// Seek
+				}
+			}
+
+			else if(command[1]=='p')
+			{
+				// Putc or puts
 			}
 
 		}
