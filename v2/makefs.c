@@ -104,7 +104,7 @@ int main (int argc, char *argv[])
 				{
 					size = size*2;
 					fs_file *temp_fs;
-					temp_fs = realloc(fs,size * sizeof(*fs));
+					temp_fs = realloc(fs,size * sizeof(fs*));
 					fs = temp_fs;
 				}
 
