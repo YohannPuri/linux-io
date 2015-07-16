@@ -129,7 +129,7 @@ int main (int argc, char *argv[])
 
 					fprintf(program,"read_str = fgets(read_str,%d,%s);\n",bts,fs[k].filename);
 
-
+					fs[k].bytes_read+=bts;
 
 				}
 
