@@ -116,7 +116,7 @@ int main (int argc, char *argv[])
 
 					fs[k].bytes_read++;
 				}
-				else if(command[4]=='g')
+				else if(command[4]=='s')
 				{
 					fscanf(log,"%d %p",&bts,&file_ptr);
 					fgetc(log);
