@@ -169,6 +169,12 @@ int main (int argc, char *argv[])
 				fgetc(log);
 				}
 			}
+			else
+			{
+				//Has to be pread or pread64
+
+				
+			}
 		}
 		else if(command[0] == 'c')
 		{
@@ -177,6 +183,26 @@ int main (int argc, char *argv[])
 			fscanf(log,"%d %d",&filedes,&ret);
 			fprintf(program,"close(%d);\n",filedes);
 			fgetc(log);
+		}
+		else if(command[0] == 'r')
+		{
+			fscanf(log,"%d %p %d %d",&filedes,&file_ptr,&bts,&ret);
+
+			int j = 0;
+				for(j=0;j<file_count;j++)
+				{
+					if(fs[j].fd == filedes)
+						break;
+				}
+
+				fs[j].bytes_read += ret;
+				fprintf(program,"char buffer3[%d] = \"",ret);
+
+				fprintf(program,"\";\n");
+				fprintf(program,"read(%d,buffer3,%d,%d);\n",filedes,ret,offset);
+
+				fgetc(log);
+
 		}
 
 	}
