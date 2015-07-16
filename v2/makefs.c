@@ -226,7 +226,7 @@ int main (int argc, char *argv[])
 
 					int k = 0;
 
-					while(fs[k].stream_pointer!=file_ptr)
+					while(fs[k].stream_pointer!=file_ptr && k<file_count)
 					{
 						k++;
 					}
