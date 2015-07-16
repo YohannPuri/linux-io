@@ -173,6 +173,32 @@ int main (int argc, char *argv[])
 			{
 				//Has to be pread or pread64
 
+				if(command[6]!='6')
+				{
+					// Has to be pwrite
+				fscanf(log,"%d %p %d %d %d",&filedes,&file_ptr,&bts,&offset,&ret);
+
+				int j = 0;
+				for(j=0;j<file_count;j++)
+				{
+					if(fs[j].fd == filedes)
+						break;
+				}
+
+				fs[j].bytes_written += ret;
+				fprintf(program,"char buffer4[%d] = \"",ret);
+				int k = 0;
+				for(k = 0; k< ret; k++)
+				{
+					fprintf(program,"a");
+				}
+
+				fprintf(program,"\";\n");
+				fprintf(program,"pread(%d,buffer4,%d,%d);\n",filedes,ret,offset);
+
+				fgetc(log);
+				}
+
 				
 			}
 		}
