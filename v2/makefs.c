@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
 	*/
 
 
-	fs_file *fs = malloc(sizeof(*fs));
+	fs_file *fs = malloc(100*sizeof(*fs));
 	int file_count = 0;
 	int size = 1;
 
@@ -95,7 +95,7 @@ int main (int argc, char *argv[])
 				fgetc(log);
 
 				fprintf(program,"fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
-
+				/*
 				if(file_count<size)
 				{
 					// No need to reallocate
@@ -107,6 +107,7 @@ int main (int argc, char *argv[])
 					temp_fs = realloc(fs,size * sizeof(fs*));
 					fs = temp_fs;
 				}
+				*/
 
 				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 					strcpy(fs[file_count].filename,str);
