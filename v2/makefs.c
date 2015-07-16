@@ -30,7 +30,7 @@ int main (int argc, char *argv[])
 
 	fs_file *fs = malloc(100*sizeof(*fs));
 	int file_count = 0;
-	int size = 1;
+	//int size = 1;
 
 	// Variables for palceholding
 	char *newPath;
