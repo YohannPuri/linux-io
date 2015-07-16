@@ -103,7 +103,7 @@ int main (int argc, char *argv[])
 				else
 				{
 					size = size*2;
-					fs = realloc(size * sizeof(*fs));
+					fs = realloc(fs,size * sizeof(*fs));
 				}
 
 				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
