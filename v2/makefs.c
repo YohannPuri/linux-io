@@ -214,6 +214,27 @@ int main (int argc, char *argv[])
 			else if(command[1]=='p')
 			{
 				// Putc or puts
+				if(command[3] == 'c')
+				{
+					// Has to be putc
+
+					fscanf(log,"%c %p %d",&cr,&file_ptr,&ret);
+
+					fgetc(log);
+
+					fprintf(progam, "char cp = %c;\n",cr);
+
+					int k = 0;
+
+					while(fs[k].stream_pointer!=file_ptr)
+					{
+						k++;
+					}
+
+					fprintf(program,"int r3 = fputc(cp,%s);\n",fs[k].filename);
+
+
+				}
 			}
 
 		}
