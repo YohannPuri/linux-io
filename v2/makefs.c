@@ -132,6 +132,25 @@ int main (int argc, char *argv[])
 					fs[k].bytes_read+=bts;
 
 				}
+				else
+				{
+					// Has to be fgetpos
+
+					fscanf(log,"%p %d",&file_ptr,&ret);
+					fgetc(log);
+					fprintf(program,"fpos_t pos;\n");
+					int k = 0;
+
+					while(fs[k].stream_pointer!=file_ptr)
+					{
+						k++;
+					}
+
+					fprintf(program,"int r = fgetpos(%s,pos);\n",fs[k].filename);
+
+
+
+				}
 
 			}
 			else if(command[1]=='r')
