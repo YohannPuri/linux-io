@@ -44,6 +44,7 @@ int main (int argc, char *argv[])
 	int filedes;
 	int bts;
 	int offset;
+	char receivedChar;
 
 
 
@@ -97,6 +98,26 @@ int main (int argc, char *argv[])
 				}
 
 			}
+			else if(command[1] == 'g')
+			{
+				// Can be fgetc, fgets, fgetpos
+
+				if(command[4]=='c')
+				{
+					fscanf(log,"%p %c",&file_ptr,&receivedChar);
+					fgetc(log);
+					int k = 0;
+					while(fs[k].stream_pointer!=file_ptr)
+					{
+						k++;
+					}
+					fprintf(program,"char c = fgetc(%s);\n",fs[k].filename);
+
+					fs[k].bytes_read++;
+				}
+
+			}
+
 		}
 		else if(command[0]=='o')
 		{
