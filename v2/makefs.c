@@ -43,7 +43,7 @@ int main (int argc, char *argv[])
 	int mode;
 	int filedes;
 	int bts;
-	int size;
+	int sz;
 	int offset;
 	char receivedChar;
 
@@ -122,7 +122,7 @@ int main (int argc, char *argv[])
 			{
 				// Has to be fread
 
-				fscanf(log,"%d %d %p %d",&size,&bts,&file_ptr,&ret);
+				fscanf(log,"%d %d %p %d",&sz,&bts,&file_ptr,&ret);
 				fgetc(log);
 
 				int k = 0;
@@ -130,9 +130,9 @@ int main (int argc, char *argv[])
 					{
 						k++;
 					}
-					fprintf(program,"char c = fread(buffer,%d,%d,%s);\n",size,bts,fs[k].filename);
+					fprintf(program,"char c = fread(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
 
-					fs[k].bytes_read+=(size*bts);
+					fs[k].bytes_read+=(sz*bts);
 			}
 
 		}
