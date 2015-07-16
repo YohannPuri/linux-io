@@ -214,7 +214,7 @@ int main (int argc, char *argv[])
 			else if(command[1]=='p')
 			{
 				// Putc or puts
-				if(command[3] == 'c')
+				if(command[4] == 'c')
 				{
 					// Has to be putc
 
