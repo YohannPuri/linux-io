@@ -76,7 +76,15 @@ int main (int argc, char *argv[])
 				// Has to be fclose
 
 				fscanf(log,"%p %d", &file_ptr, &ret);
-				//fprintf(log,"fclose();\n", file_ptr, ret);
+				fgetc(log);
+				int k = 0;
+					while(fs[k].stream_pointer!=file_ptr)
+					{
+						k++;
+					}
+
+
+				fprintf(log,"int cr = fclose(%s);\n",fs[k].filename);
 			}
 			else if(command[1] == 'o')
 			{
@@ -168,6 +176,25 @@ int main (int argc, char *argv[])
 					fprintf(program,"fread(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
 
 					fs[k].bytes_read+=(sz*bts);
+			}
+			else if(command[1] == 's')
+			{
+				// fseek or fsetpos
+
+				if(command[3]=='t')
+				{
+					fscanf(log,"%p %d",&file_ptr,&ret);
+					fgetc(log);
+					fprintf(program,"fpos_t pos2;\n");
+					int k = 0;
+
+					while(fs[k].stream_pointer!=file_ptr)
+					{
+						k++;
+					}
+
+					fprintf(program,"int r2 = fsetpos(%s,pos2);\n",fs[k].filename);
+				}
 			}
 
 		}
