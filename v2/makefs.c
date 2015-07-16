@@ -84,7 +84,7 @@ int main (int argc, char *argv[])
 					}
 
 
-				fprintf(log,"int cr = fclose(%s);\n",fs[k].filename);
+				fprintf(program,"int cr = fclose(%s);\n",fs[k].filename);
 			}
 			else if(command[1] == 'o')
 			{
