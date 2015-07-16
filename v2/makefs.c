@@ -218,11 +218,11 @@ int main (int argc, char *argv[])
 				{
 					// Has to be putc
 
-					fscanf(log,"%c %p %d",&cr,&file_ptr,&ret);
+					fscanf(log,"%c %p %d",&receivedChar,&file_ptr,&ret);
 
 					fgetc(log);
 
-					fprintf(progam, "char cp = %c;\n",cr);
+					fprintf(program, "char cp = %c;\n",receivedChar);
 
 					int k = 0;
 
