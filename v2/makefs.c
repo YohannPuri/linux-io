@@ -120,13 +120,13 @@ int main (int argc, char *argv[])
 				{
 					fscanf(log,"%d %p",&bts,&file_ptr);
 					fgetc(log);
-					fprintf(program,"char read_str[%d];\n",&bts);
+					fprintf(program,"char read_str[%d];\n",bts);
 					int k = 0;
 					while(fs[k].stream_pointer!=file_ptr)
 					{
 						k++;
 					}
-					
+
 					fprintf(program,"read_str = fgets(read_str,%d,%s);\n",bts,fs[k].filename);
 
 
