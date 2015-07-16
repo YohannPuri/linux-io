@@ -338,7 +338,7 @@ char * fgets ( char * str, int num, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fgets %s %d %p %s\n",called_time,exec_time,(long)pid,(long)tid,str,num,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fgets %d %p\n",called_time,exec_time,(long)pid,(long)tid,num,stream);
 
 
     return ret;

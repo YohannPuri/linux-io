@@ -116,6 +116,22 @@ int main (int argc, char *argv[])
 
 					fs[k].bytes_read++;
 				}
+				else if(command[4]=='g')
+				{
+					fscanf(log,"%d %p",&bts,&file_ptr);
+					fgetc(log);
+					fprintf(program,"char read_str[%d];\n",&bts);
+					int k = 0;
+					while(fs[k].stream_pointer!=file_ptr)
+					{
+						k++;
+					}
+					
+					fprintf(program,"read_str = fgets(read_str,%d,%s);\n",bts,fs[k].filename);
+
+
+
+				}
 
 			}
 			else if(command[1]=='r')
@@ -130,7 +146,7 @@ int main (int argc, char *argv[])
 					{
 						k++;
 					}
-					fprintf(program,"char c = fread(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
+					fprintf(program,"fread(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
 
 					fs[k].bytes_read+=(sz*bts);
 			}
