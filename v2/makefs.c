@@ -45,6 +45,7 @@ int main (int argc, char *argv[])
 	int bts;
 	int sz;
 	int offset;
+	long num;
 	char receivedChar;
 
 
@@ -199,6 +200,7 @@ int main (int argc, char *argv[])
 					fscanf(log,"%p %d",&file_ptr,&ret);
 					fgetc(log);
 					fprintf(program,"fpos_t pos2;\n");
+					
 					int k = 0;
 
 					while(fs[k].stream_pointer!=file_ptr)
@@ -211,6 +213,18 @@ int main (int argc, char *argv[])
 				else
 				{
 					// Seek
+
+					fscanf(log,"%p %ld %d %d",&file_ptr,&num,&offset,&ret);
+					fgetc(log);
+					
+					int k = 0;
+
+					while(fs[k].stream_pointer!=file_ptr && k < file_count)
+					{
+						k++;
+					}
+
+					fprintf(program,"int rsk = fseek(%s,%ld,%d);\n",fs[k].filename,num,offset);
 				}
 			}
 
@@ -238,6 +252,56 @@ int main (int argc, char *argv[])
 
 
 				}
+				else
+				{
+					fscanf(log,"%p %d",&file_ptr,&ret);
+					fgetc(log);
+
+					int k = 0;
+
+					while(fs[k].stream_pointer!=file_ptr && k<file_count)
+					{
+						k++;
+					}
+
+					fprintf(program, "char putstr[%d] = \"",ret);
+					int l =0;
+					for(l=0;l<ret;l++)
+					{
+						fprintf(program,"a");
+					}
+					fprintf(program, "\";\n");
+
+					fprintf(program,"int rps = fputs(putstr,%s);\n",fs[k].filename);
+
+				}
+			}
+			else if(command[1] == 'w')
+			{
+				//fwrite
+				fscanf(log,"%d %d %p %d",&sz,&bts,&file_ptr,&ret);
+				fgetc(log);
+
+				int k = 0;
+				while(fs[k].stream_pointer!=file_ptr && k<file_count)
+					{
+						k++;
+					}
+					fprintf(program,"fwrite(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
+
+					fs[k].bytes_written+=(sz*bts);
+
+			}
+			else
+			{
+				fscanf(log,"%p %d",&file_ptr,&ret);
+				int k = 0;
+				while(fs[k].stream_pointer!=file_ptr && k<file_count)
+					{
+						k++;
+					}
+				fprintf(program,"long rtl = ftell(%s);\n",fs[k].filename);
+
 			}
 
 		}
