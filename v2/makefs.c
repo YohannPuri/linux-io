@@ -96,7 +96,7 @@ int main (int argc, char *argv[])
 				fscanf(log,"%p %d", &file_ptr, &ret);
 				fgetc(log);
 				int k = 0;
-					while(fs[k].stream_pointer!=file_ptr)
+					while(fs[k].stream_pointer!=file_ptr && k < file_ptr)
 					{
 						k++;
 					}
@@ -147,7 +147,7 @@ int main (int argc, char *argv[])
 					fscanf(log,"%p %c",&file_ptr,&receivedChar);
 					fgetc(log);
 					int k = 0;
-					while(fs[k].stream_pointer!=file_ptr)
+					while(fs[k].stream_pointer!=file_ptr && k < file_count)
 					{
 						k++;
 					}
@@ -161,7 +161,7 @@ int main (int argc, char *argv[])
 					fgetc(log);
 					fprintf(program,"\tchar read_str[%d];\n",bts);
 					int k = 0;
-					while(fs[k].stream_pointer!=file_ptr)
+					while(fs[k].stream_pointer!=file_ptr && k < file_count)
 					{
 						k++;
 					}
@@ -180,7 +180,7 @@ int main (int argc, char *argv[])
 					fprintf(program,"\tfpos_t pos;\n");
 					int k = 0;
 
-					while(fs[k].stream_pointer!=file_ptr)
+					while(fs[k].stream_pointer!=file_ptr && k < file_count)
 					{
 						k++;
 					}
@@ -200,7 +200,7 @@ int main (int argc, char *argv[])
 				fgetc(log);
 
 				int k = 0;
-				while(fs[k].stream_pointer!=file_ptr)
+				while(fs[k].stream_pointer!=file_ptr && k < file_count)
 					{
 						k++;
 					}
@@ -220,7 +220,7 @@ int main (int argc, char *argv[])
 					
 					int k = 0;
 
-					while(fs[k].stream_pointer!=file_ptr)
+					while(fs[k].stream_pointer!=file_ptr && k < file_count)
 					{
 						k++;
 					}
