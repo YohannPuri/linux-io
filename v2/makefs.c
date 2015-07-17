@@ -62,11 +62,20 @@ int main (int argc, char *argv[])
 	int pid = 0, tid = 0;
 	useconds_t usec = 0;
 
+	fprintf(program,"#include <stdio.h>\n");
+	fprintf(program,"#include <stdlib.h>\n");
+	fprintf(program,"#include <unistd.h>\n");
+	fprintf(program,"#include <sys/types.h>\n");
+	fprintf(program,"#include <fcntl.h>\n");
+	fprintf(program,"#include <string.h>\n");
+	fprintf(program,"#include <stdarg.h>\n");
+
+	fprintf(program,"int main(){\n");
 	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,command)!=EOF)
 	{
 		//printf("\n \n %lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
 		usec = (unsigned int)(prog_time*1000000);
-		fprintf(program, "usleep(%u);\n", (unsigned int)usec);
+		fprintf(program, "usleep(%u);\n\n", (unsigned int)usec);
 
 		if(command[0]=='f')
 		{
@@ -439,6 +448,8 @@ int main (int argc, char *argv[])
 		}
 
 	}
+
+	fprintf(program,"return 0;\n}");
 	fclose(log);
 	fclose(program);
 
