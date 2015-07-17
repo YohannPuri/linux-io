@@ -72,11 +72,11 @@ int main (int argc, char *argv[])
 
 	fprintf(program,"int main(){\n\n\n");
 
-	fprintf(program,"int ret_int = 0; \n");
-	fprintf(program,"char ret_char = ' '; \n");
-	fprintf(program,"long ret_long = 0; \n");
-	fprintf(program,"char* ret_char_ptr = NULL; \n");
-	fprintf(program,"FILE* ret_file_ptr = 0; \n");
+	fprintf(program,"\tint ret_int = 0; \n");
+	fprintf(program,"\tchar ret_char = ' '; \n");
+	fprintf(program,"\tlong ret_long = 0; \n");
+	fprintf(program,"\tchar* ret_char_ptr = NULL; \n");
+	fprintf(program,"\tFILE* ret_file_ptr = 0; \n\n\n");
 
 
 	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,command)!=EOF)
