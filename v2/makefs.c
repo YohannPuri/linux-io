@@ -457,7 +457,7 @@ int main (int argc, char *argv[])
 
 	}
 
-	fprintf(program,"return 0;\n}");
+	fprintf(program,"\n\nreturn 0;\n\n}");
 	fclose(log);
 	fclose(program);
 
