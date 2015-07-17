@@ -363,7 +363,7 @@ int fputs ( const char * str, FILE * stream )
 
     pid_t tid = gettid();
 
-    fprintf(logFile,"%lf %lf %ld %ld fputs %s %p %d\n",called_time,exec_time,(long)pid,(long)tid,str,stream,ret);
+    fprintf(logFile,"%lf %lf %ld %ld fputs %p %d\n",called_time,exec_time,(long)pid,(long)tid,stream,ret);
 
 
     return ret;
