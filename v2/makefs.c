@@ -96,7 +96,7 @@ int main (int argc, char *argv[])
 				fscanf(log,"%p %d", &file_ptr, &ret);
 				fgetc(log);
 				int k = 0;
-					while(fs[k].stream_pointer!=file_ptr && k < file_ptr)
+					while(fs[k].stream_pointer!=file_ptr && k < file_count)
 					{
 						k++;
 					}
