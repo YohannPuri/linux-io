@@ -115,7 +115,7 @@ int main (int argc, char *argv[])
 					fs[file_count].bytes_written = 0;
 					fs[file_count].bytes_read = 0;
 					fs[file_count].stream_pointer = file_ptr;
-					printf("%s %p \n",fs[file_count].filename,fs[file_count].stream_pointer);
+					//printf("%s %p \n",fs[file_count].filename,fs[file_count].stream_pointer);
 					file_count++;
 
 
