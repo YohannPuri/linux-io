@@ -68,9 +68,17 @@ int main (int argc, char *argv[])
 	fprintf(program,"#include <sys/types.h>\n");
 	fprintf(program,"#include <fcntl.h>\n");
 	fprintf(program,"#include <string.h>\n");
-	fprintf(program,"#include <stdarg.h>\n");
+	fprintf(program,"#include <stdarg.h>\n\n\n");
 
-	fprintf(program,"int main(){\n");
+	fprintf(program,"int main(){\n\n\n");
+
+	fprintf(program,"int ret_int = 0; \n");
+	fprintf(program,"char ret_char = ' '; \n");
+	fprintf(program,"long ret_long = 0; \n");
+	fprintf(program,"char* ret_char_ptr = NULL; \n");
+	fprintf(program,"FILE* ret_file_ptr = 0; \n");
+
+
 	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,command)!=EOF)
 	{
 		//printf("\n \n %lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
@@ -94,7 +102,7 @@ int main (int argc, char *argv[])
 					}
 
 
-				fprintf(program,"int cr = fclose(%s);\n",fs[k].filename);
+				fprintf(program,"ret_int = fclose(%s);\n",fs[k].filename);
 			}
 			else if(command[1] == 'o')
 			{
@@ -104,7 +112,7 @@ int main (int argc, char *argv[])
 				//printf("%s %c %p \n",str,filemode,file_ptr);
 				fgetc(log);
 
-				fprintf(program,"fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
+				fprintf(program,"ret_file_ptr = fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
 				/*
 				if(file_count<size)
 				{
@@ -143,7 +151,7 @@ int main (int argc, char *argv[])
 					{
 						k++;
 					}
-					fprintf(program,"char c = fgetc(%s);\n",fs[k].filename);
+					fprintf(program,"ret_char = fgetc(%s);\n",fs[k].filename);
 
 					fs[k].bytes_read++;
 				}
@@ -177,7 +185,7 @@ int main (int argc, char *argv[])
 						k++;
 					}
 
-					fprintf(program,"int r = fgetpos(%s,pos);\n",fs[k].filename);
+					fprintf(program,"ret_int = fgetpos(%s,pos);\n",fs[k].filename);
 
 
 
@@ -196,7 +204,7 @@ int main (int argc, char *argv[])
 					{
 						k++;
 					}
-					fprintf(program,"fread(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
+					fprintf(program,"ret_int = fread(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
 
 					fs[k].bytes_read+=(sz*bts);
 			}
@@ -217,7 +225,7 @@ int main (int argc, char *argv[])
 						k++;
 					}
 
-					fprintf(program,"int r2 = fsetpos(%s,pos2);\n",fs[k].filename);
+					fprintf(program,"ret_int = fsetpos(%s,pos2);\n",fs[k].filename);
 				}
 				else
 				{
@@ -233,7 +241,7 @@ int main (int argc, char *argv[])
 						k++;
 					}
 
-					fprintf(program,"int rsk = fseek(%s,%ld,%d);\n",fs[k].filename,num,offset);
+					fprintf(program,"ret_int = fseek(%s,%ld,%d);\n",fs[k].filename,num,offset);
 				}
 			}
 
@@ -248,7 +256,7 @@ int main (int argc, char *argv[])
 
 					fgetc(log);
 
-					fprintf(program, "char cp = %c;\n",receivedChar);
+					fprintf(program, "ret_char = %c;\n",receivedChar);
 
 					int k = 0;
 
@@ -257,7 +265,7 @@ int main (int argc, char *argv[])
 						k++;
 					}
 
-					fprintf(program,"int r3 = fputc(cp,%s);\n",fs[k].filename);
+					fprintf(program,"ret_int = fputc(ret_char,%s);\n",fs[k].filename);
 
 
 				}
@@ -281,7 +289,7 @@ int main (int argc, char *argv[])
 					}
 					fprintf(program, "\";\n");
 
-					fprintf(program,"int rps = fputs(putstr,%s);\n",fs[k].filename);
+					fprintf(program,"ret_int = fputs(putstr,%s);\n",fs[k].filename);
 
 				}
 			}
@@ -296,7 +304,7 @@ int main (int argc, char *argv[])
 					{
 						k++;
 					}
-					fprintf(program,"fwrite(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
+					fprintf(program,"ret_int = fwrite(buffer,%d,%d,%s);\n",sz,bts,fs[k].filename);
 
 					fs[k].bytes_written+=(sz*bts);
 
@@ -309,7 +317,7 @@ int main (int argc, char *argv[])
 					{
 						k++;
 					}
-				fprintf(program,"long rtl = ftell(%s);\n",fs[k].filename);
+				fprintf(program,"ret_long = ftell(%s);\n",fs[k].filename);
 
 			}
 
@@ -322,7 +330,7 @@ int main (int argc, char *argv[])
 				fscanf(log,"%s %d %d",str,&mode,&ret);
 				fgetc(log);
 
-				fprintf(program,"open(\"%s/%s\",%d);\n",newPath,str,mode);
+				fprintf(program,"ret_int = open(\"%s/%s\",%d);\n",newPath,str,mode);
 			}
 		}
 		else if(command[0]=='w')
@@ -348,7 +356,7 @@ int main (int argc, char *argv[])
 				}
 
 				fprintf(program,"\";\n");
-				fprintf(program,"write(%d,buffer,%d);\n",filedes,ret);
+				fprintf(program,"ret_int = write(%d,buffer,%d);\n",filedes,ret);
 
 				fgetc(log);
 			}
@@ -380,7 +388,7 @@ int main (int argc, char *argv[])
 				}
 
 				fprintf(program,"\";\n");
-				fprintf(program,"pwrite(%d,buffer2,%d,%d);\n",filedes,ret,offset);
+				fprintf(program,"ret_int = pwrite(%d,buffer2,%d,%d);\n",filedes,ret,offset);
 
 				fgetc(log);
 				}
@@ -410,7 +418,7 @@ int main (int argc, char *argv[])
 				}
 
 				fprintf(program,"\";\n");
-				fprintf(program,"pread(%d,buffer4,%d,%d);\n",filedes,ret,offset);
+				fprintf(program,"ret_int = pread(%d,buffer4,%d,%d);\n",filedes,ret,offset);
 
 				fgetc(log);
 				}
@@ -423,7 +431,7 @@ int main (int argc, char *argv[])
 			// Has to be close...
 
 			fscanf(log,"%d %d",&filedes,&ret);
-			fprintf(program,"close(%d);\n",filedes);
+			fprintf(program,"ret_int = close(%d);\n",filedes);
 			fgetc(log);
 		}
 		else if(command[0] == 'r')
@@ -441,7 +449,7 @@ int main (int argc, char *argv[])
 				fprintf(program,"char buffer3[%d] = \"",ret);
 
 				fprintf(program,"\";\n");
-				fprintf(program,"read(%d,buffer3,%d,%d);\n",filedes,ret,offset);
+				fprintf(program,"ret_int = read(%d,buffer3,%d,%d);\n",filedes,ret,offset);
 
 				fgetc(log);
 
