@@ -463,7 +463,7 @@ int main (int argc, char *argv[])
 	fclose(program);
 
 	int k = 0;
-	while(fs!=NULL)
+	while(k<file_count)
 	{
 		fprintf(fileinfo,"%s %d %d %p \n",fs[k].filename,fs[k].bytes_read,fs[k].bytes_written,fs[k].stream_pointer);
 		k++;
