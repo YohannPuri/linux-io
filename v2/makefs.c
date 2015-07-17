@@ -57,6 +57,7 @@ int main (int argc, char *argv[])
 
 	FILE* log = fopen("log.txt","r");
 	FILE* program = fopen("program.c","w");
+	FILE* fileinfo = fopen("fileinfo.txt","w");
 
 	double prog_time = 0.0, exec_time = 0.0;
 	int pid = 0, tid = 0;
@@ -461,6 +462,14 @@ int main (int argc, char *argv[])
 	fclose(log);
 	fclose(program);
 
+	int k = 0;
+	while(fs[k] != NULL)
+	{
+		fprint(fileinfo,"%s %d %d %p \n",fs[k].filename,fs[k].bytes_read,fs[k].bytes_written,fs[k].stream_pointer);
+		k++;
+	}
+
+	fclose(fileinfo);
 	return 0;
 
 }
