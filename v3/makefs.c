@@ -525,10 +525,13 @@ int main (int argc, char *argv[])
 	fclose(log);
 	fclose(program);
 
+	fprintf(fileinfo,"Filename\tpid\ttid\tBytesRead\tBytesWritten\tfd\tStreamPointer\tfdi\tfpi\n");
+
+
 	int k = 0;
 	while(k<file_count)
 	{
-		fprintf(fileinfo,"%s %d %d %p \n",fs[k].filename,fs[k].bytes_read,fs[k].bytes_written,fs[k].stream_pointer);
+		fprintf(fileinfo,"%s\t%d\t%d\t%d\t%d\t%d\t%p\t%d\t%d \n",fs[k].filename,fs[k].pid,fs[k].tid,fs[k].bytes_read,fs[k].bytes_written,fs[k].fd,fs[k].stream_pointer,fs[k].fdi,fs[k].fpi);
 		k++;
 	}
 
