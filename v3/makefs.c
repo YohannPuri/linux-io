@@ -76,6 +76,19 @@ int main (int argc, char *argv[])
 	FILE* log = fopen("log.txt","r");
 	FILE* program = fopen("program.c","w");
 	FILE* fileinfo = fopen("fileinfo.txt","w");
+	FILE* graph = fopen("graph.txt","w");
+
+	int l = 0;
+
+	for(l=0;newPath[l]!='\0';l++)
+	{
+		if(newPath[l]!='/')
+			fputc(newPath[l],graph);
+		else
+		{
+			fputc('\n',graph);
+		}
+	}
 
 	double prog_time = 0.0, exec_time = 0.0;
 	int pid = 0, tid = 0;
@@ -527,6 +540,7 @@ int main (int argc, char *argv[])
 	fprintf(program,"\n\nreturn 0;\n\n}");
 	fclose(log);
 	fclose(program);
+	fclose(graph);
 
 	fprintf(fileinfo,"Filename\t\tpid\ttid\tBytesRead\tBytesWritten\tfd\tStreamPointer\tfdi\tfpi\n");
 
