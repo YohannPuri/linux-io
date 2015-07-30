@@ -360,7 +360,7 @@ int main (int argc, char *argv[])
 				fscanf(log,"%s %d %d",str,&mode,&ret);
 				fgetc(log);
 
-				fprintf(program,"\tfd%d = open(\"%s/%s\",%d);\n",file_desc_ptr,newPath,str,mode);
+				fprintf(program,"\tfd%d = open(\"%s/%s\",%d);\n",file_desc_index,newPath,str,mode);
 
 
 				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
