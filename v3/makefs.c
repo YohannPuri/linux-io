@@ -158,7 +158,9 @@ int main (int argc, char *argv[])
 					fs[file_count].stream_pointer = file_ptr;
 
 					fs[file_count].fpi = file_ptr_index;
-					
+
+					fs[file_count].pid = pid;
+					fs[file_count].tid = tid;
 
 					file_ptr_index++;
 					file_count++;
@@ -358,7 +360,27 @@ int main (int argc, char *argv[])
 				fscanf(log,"%s %d %d",str,&mode,&ret);
 				fgetc(log);
 
-				fprintf(program,"\tret_int = open(\"%s/%s\",%d);\n",newPath,str,mode);
+				fprintf(program,"\tfd%d = open(\"%s/%s\",%d);\n",file_desc_ptr,newPath,str,mode);
+
+
+				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
+				strcpy(fs[file_count].filename,str);
+
+				// Initialize byes written and read
+				fs[file_count].bytes_written = 0;
+				fs[file_count].bytes_read = 0;
+
+
+					fs[file_count].fd = file_desc_index;
+
+					// fs[file_count].fpi = file_ptr_index;
+
+					fs[file_count].pid = pid;
+					fs[file_count].tid = tid;
+
+					file_desc_index++;
+					file_count++;
+
 			}
 		}
 		else if(command[0]=='w')
