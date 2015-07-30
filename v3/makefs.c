@@ -95,8 +95,8 @@ int main (int argc, char *argv[])
 	fprintf(program,"\tchar ret_char = ' '; \n");
 	fprintf(program,"\tlong ret_long = 0; \n");
 	fprintf(program,"\tchar* ret_char_ptr = NULL; \n");
-	fprintf(program,"\tFILE* ret_file_ptr = 0; \n\n\n");
-
+	fprintf(program,"\tFILE* ret_file_ptr = 0; \n");
+	fprintf(program,"\tchar* buffer = NULL; \n\n\n");
 
 
 
@@ -400,15 +400,16 @@ int main (int argc, char *argv[])
 				}
 
 				fs[j].bytes_written += ret;
-				fprintf(program,"\tchar buffer[%d] = \"",ret);
+				fprintf(program,"\tbuffer = malloc(sizeof(char)*[%d]);",ret);
 				int k = 0;
 				for(k = 0; k< ret; k++)
 				{
-					fprintf(program,"a");
+					fprintf(program,"for(i=0;i<%d;i++)\n{\nchar[i] = 'a'\n}\n");
 				}
 
-				fprintf(program,"\";\n");
 				fprintf(program,"\tret_int = write(%d,buffer,%d);\n",filedes,ret);
+				fprintf(program,"free(buffer);");
+				
 
 				fgetc(log);
 			}
