@@ -373,9 +373,9 @@ int main (int argc, char *argv[])
 				fs[file_count].bytes_read = 0;
 
 
-					fs[file_count].fd = file_desc_index;
+					fs[file_count].fd = ret;
 
-					// fs[file_count].fpi = file_ptr_index;
+					fs[file_count].fdi = file_desc_index;
 
 					fs[file_count].pid = pid;
 					fs[file_count].tid = tid;
@@ -483,7 +483,14 @@ int main (int argc, char *argv[])
 			// Has to be close...
 
 			fscanf(log,"%d %d",&filedes,&ret);
-			fprintf(program,"\tret_int = close(%d);\n",filedes);
+
+			int k = 0;
+			while(fs[k].fd!=filedes && k < file_count)
+			{
+						k++;
+			}
+
+			fprintf(program,"\tret_int = close(fd%d);\n",fs[k].fdi);
 			fgetc(log);
 		}
 		else if(command[0] == 'r')
