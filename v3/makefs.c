@@ -134,7 +134,7 @@ int main (int argc, char *argv[])
 					}
 
 
-				fprintf(program,"\tret_int = fclose(%s);\n",fs[k].filename);
+				fprintf(program,"\tret_int = fclose(file_ptr%d);\n",fs[k].fpi);
 			}
 			else if(command[1] == 'o')
 			{
