@@ -403,10 +403,10 @@ int main (int argc, char *argv[])
 				fprintf(program,"\tbuffer = malloc(sizeof(char)*%d);\n",ret);
 				int k = 0;
 
-				fprintf(program,"for(i=0;i<%d;i++)\n{\nchar[i] = 'a'\n}\n",ret);
+				fprintf(program,"\tfor(i=0;i<%d;i++)\n\t{\n\tchar[i] = 'a'\n}\n",ret);
 
 				fprintf(program,"\tret_int = write(%d,buffer,%d);\n",filedes,ret);
-				fprintf(program,"free(buffer);");
+				fprintf(program,"\tfree(buffer);\n");
 
 
 				fgetc(log);
