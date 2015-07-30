@@ -400,16 +400,14 @@ int main (int argc, char *argv[])
 				}
 
 				fs[j].bytes_written += ret;
-				fprintf(program,"\tbuffer = malloc(sizeof(char)*[%d]);",ret);
+				fprintf(program,"\tbuffer = malloc(sizeof(char)*%d);\n",ret);
 				int k = 0;
-				for(k = 0; k< ret; k++)
-				{
-					fprintf(program,"for(i=0;i<%d;i++)\n{\nchar[i] = 'a'\n}\n");
-				}
+
+				fprintf(program,"for(i=0;i<%d;i++)\n{\nchar[i] = 'a'\n}\n",ret);
 
 				fprintf(program,"\tret_int = write(%d,buffer,%d);\n",filedes,ret);
 				fprintf(program,"free(buffer);");
-				
+
 
 				fgetc(log);
 			}
