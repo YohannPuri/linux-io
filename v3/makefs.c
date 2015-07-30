@@ -4,6 +4,10 @@
 #include <unistd.h>
 
 
+// These structures store our file info. 100 of these are currently being allocated at the beginning of the program
+// They are initialized as files are opened.
+
+
 typedef struct{
 
 	char* filename;
@@ -12,11 +16,13 @@ typedef struct{
 	unsigned int bytes_read;
 	unsigned int bytes_written;
 	unsigned int fd;
+	int fpi;
+	int fdi;
 	void * stream_pointer;
 
 }fs_file;
-int main (int argc, char *argv[])
-{
+
+
 
 	// Data we are trying to maintain
 	/*
@@ -30,11 +36,21 @@ int main (int argc, char *argv[])
 	*/
 
 
-	fs_file *fs = malloc(100*sizeof(*fs));
-	int file_count = 0;
+int main (int argc, char *argv[])
+{
+
+	fs_file fs[100];			// Allocating 100 of our structures
+
+
+	int file_count = 0;			// Gross count on the number of open files
+	int file_ptr_index = 0;		// Number of files opened using stdio functions
+	int file_desc_index = 0;	// Number of files opened using fcntl functions
+
+
+
 	//int size = 1;
 
-	// Variables for palceholding
+	// Variables for placeholding
 	char *newPath;
 	char command[20];
 	char str[100];
@@ -50,7 +66,6 @@ int main (int argc, char *argv[])
 	long num;
 	char receivedChar;
 
-	int file_ptr_index = 0;
 	//int buffer_index = 0;
 
 	if(argc != 1)
