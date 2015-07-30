@@ -92,11 +92,15 @@ int main (int argc, char *argv[])
 	fprintf(program,"int main(){\n\n\n");
 
 	fprintf(program,"\tint ret_int = 0; \n");
+	fprintf(program,"\tint i = 0; \n");
 	fprintf(program,"\tchar ret_char = ' '; \n");
 	fprintf(program,"\tlong ret_long = 0; \n");
 	fprintf(program,"\tchar* ret_char_ptr = NULL; \n");
 	fprintf(program,"\tFILE* ret_file_ptr = 0; \n");
-	fprintf(program,"\tchar* buffer = NULL; \n\n\n");
+	fprintf(program,"\tchar* buffer = NULL; \n");
+	fprintf(program,"\tchar* buffer2 = NULL; \n");
+	fprintf(program,"\tchar* buffer3 = NULL; \n");
+	fprintf(program,"\tchar* buffer4 = NULL; \n\n\n");
 
 
 
@@ -403,7 +407,7 @@ int main (int argc, char *argv[])
 				fprintf(program,"\tbuffer = malloc(sizeof(char)*%d);\n",ret);
 				int k = 0;
 
-				fprintf(program,"\tfor(i=0;i<%d;i++)\n\t{\n\tchar[i] = 'a'\n}\n",ret);
+				fprintf(program,"\tfor(i=0;i<%d;i++)\n\t{\n\tchar[i] = 'a';\n\t}\n",ret);
 
 				fprintf(program,"\tret_int = write(%d,buffer,%d);\n",filedes,ret);
 				fprintf(program,"\tfree(buffer);\n");
@@ -431,15 +435,14 @@ int main (int argc, char *argv[])
 				}
 
 				fs[j].bytes_written += ret;
-				fprintf(program,"\tchar buffer2[%d] = \"",ret);
-				int k = 0;
-				for(k = 0; k< ret; k++)
-				{
-					fprintf(program,"a");
-				}
 
-				fprintf(program,"\";\n");
+				fprintf(program,"\tbuffer2 = malloc(sizeof(char)*%d);\n",ret);
+				int k = 0;
+
+				fprintf(program,"\tfor(i=0;i<%d;i++)\n\t{\n\tchar[i] = 'a';\n\t}\n",ret);
+				
 				fprintf(program,"\tret_int = pwrite(%d,buffer2,%d,%d);\n",filedes,ret,offset);
+				fprintf(program,"\tfree(buffer2);\n");
 
 				fgetc(log);
 				}
@@ -461,16 +464,13 @@ int main (int argc, char *argv[])
 				}
 
 				fs[j].bytes_written += ret;
-				fprintf(program,"\tchar buffer4[%d] = \"",ret);
+				fprintf(program,"\tbuffer4 = malloc(sizeof(char)*%d);\n",ret);
 				int k = 0;
-				for(k = 0; k< ret; k++)
-				{
-					fprintf(program,"a");
-				}
 
-				fprintf(program,"\";\n");
+				fprintf(program,"\tfor(i=0;i<%d;i++)\n\t{\n\tchar[i] = 'a';\n\t}\n",ret);
+
 				fprintf(program,"\tret_int = pread(%d,buffer4,%d,%d);\n",filedes,ret,offset);
-
+				fprintf(program,"\tfree(buffer4);\n");
 				fgetc(log);
 				}
 
@@ -504,10 +504,16 @@ int main (int argc, char *argv[])
 				}
 
 				fs[j].bytes_read += ret;
-				fprintf(program,"\tchar buffer3[%d] = \"",ret);
+				
+				fprintf(program,"\tbuffer3 = malloc(sizeof(char)*%d);\n",ret);
+				int k = 0;
 
-				fprintf(program,"\";\n");
+				fprintf(program,"\tfor(i=0;i<%d;i++)\n\t{\n\tchar[i] = 'a';\n\t}\n",ret);
+
+
 				fprintf(program,"\tret_int = read(%d,buffer3,%d,%d);\n",filedes,ret,offset);
+				fprintf(program,"\tfree(buffer3);\n");
+
 
 				fgetc(log);
 
