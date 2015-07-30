@@ -86,7 +86,7 @@ int main (int argc, char *argv[])
 			fputc(newPath[l],graph);
 		else
 		{
-			fputc('\n|__\n',graph);
+			fputs("\n|__\n",graph);
 		}
 	}
 
