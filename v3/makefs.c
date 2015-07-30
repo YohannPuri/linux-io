@@ -168,6 +168,9 @@ int main (int argc, char *argv[])
 					fs[file_count].pid = pid;
 					fs[file_count].tid = tid;
 
+					fs[file_count].fd = -1;
+					fs[file_count].fdi = -1;
+
 					file_ptr_index++;
 					file_count++;
 
