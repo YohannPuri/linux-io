@@ -51,7 +51,7 @@ int main (int argc, char *argv[])
 	char receivedChar;
 
 	int file_ptr_index = 0;
-	int buffer_index = 0;
+	//int buffer_index = 0;
 
 	if(argc != 1)
 	{
