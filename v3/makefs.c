@@ -76,7 +76,7 @@ int main (int argc, char *argv[])
 	FILE* log = fopen("log.txt","r");
 	FILE* program = fopen("program.c","w");
 	FILE* fileinfo = fopen("fileinfo.txt","w");
-	FILE* graph = fopen("graph.txt","w");
+	FILE* graph = fopen("graph.txt","w+");
 
 	int l = 0;
 
@@ -86,10 +86,12 @@ int main (int argc, char *argv[])
 			fputc(newPath[l],graph);
 		else
 		{
-			fputs("\n|__\n",graph);
+			fputc('\n',graph);
 		}
 	}
 
+	fputc('\n',graph);
+	
 	double prog_time = 0.0, exec_time = 0.0;
 	int pid = 0, tid = 0;
 	useconds_t usec = 0;

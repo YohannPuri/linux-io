@@ -14,12 +14,12 @@ int main()
 
   printf("%lf \n",(double)program_start/CLOCKS_PER_SEC);
   
-  FILE *in = fopen("test.txt","r");
+  FILE *in = fopen("folder1/test.txt","r");
   char ch;
 
 	fpos_t pos;
 
-  int fd = open("test2.txt",O_WRONLY);
+  int fd = open("folder1/sub1/test2.txt",O_WRONLY);
 	//int fd2 = open64("test3.txt",O_WRONLY);
 
 	char buffer[20] = "THIS IS JUST TEXT";
@@ -30,7 +30,7 @@ int main()
 
 	close(fd);
 
-	fd = open("test4.txt",O_RDONLY);
+	fd = open("folder2/test4.txt",O_RDONLY);
 
 	read(fd,(void*)buffer,10);
 
@@ -54,7 +54,7 @@ int main()
 
 	fclose(in);
 
-	FILE *out = fopen("test3.txt","w");
+	FILE *out = fopen("folder3/sub1/sub2/sub3/test3.txt","w");
 	fputc(ch,out);
 	int arr[5] = {1,2,3,4,5};
 	fwrite((void*)arr,1,5,out);
