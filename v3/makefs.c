@@ -7,6 +7,8 @@
 typedef struct{
 
 	char* filename;
+	int pid;
+	int tid;
 	unsigned int bytes_read;
 	unsigned int bytes_written;
 	unsigned int fd;
@@ -48,7 +50,8 @@ int main (int argc, char *argv[])
 	long num;
 	char receivedChar;
 
-
+	int file_ptr_index = 0;
+	int buffer_index = 0;
 
 	if(argc != 1)
 	{
@@ -113,7 +116,9 @@ int main (int argc, char *argv[])
 				//printf("%s %c %p \n",str,filemode,file_ptr);
 				fgetc(log);
 
-				fprintf(program,"\tret_file_ptr = fopen(\"%s/%s\",\"%c\");\n",newPath,str,filemode);
+				fprintf(program,"\tfile_ptr%d = fopen(\"%s/%s\",\"%c\");\n",file_ptr_index,newPath,str,filemode);
+
+				file_ptr_index++;
 				/*
 				if(file_count<size)
 				{
