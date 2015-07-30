@@ -111,6 +111,8 @@ int main (int argc, char *argv[])
 		//printf("\n \n %lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
 		
 		usec = (unsigned int)(prog_time*1000000);
+		if(usec == 0)
+			break;
 		fprintf(program, "\tusleep(%u);\n\n", (unsigned int)usec);			// Delay is printed into program
 
 
