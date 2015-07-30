@@ -91,7 +91,7 @@ int main (int argc, char *argv[])
 	}
 
 	fputc('\n',graph);
-	
+
 	double prog_time = 0.0, exec_time = 0.0;
 	int pid = 0, tid = 0;
 	useconds_t usec = 0;
@@ -165,7 +165,21 @@ int main (int argc, char *argv[])
 
 				fprintf(program,"\tfile_ptr%d = fopen(\"%s/%s\",\"%c\");\n",file_ptr_index,newPath,str,filemode);
 
+					// char temp[100];
+					// l=0;
+					// fseek(graph,0,0);
+					// while(str[l]!='\0')
+					// {
+					// 	int q = 0;
+					// 	while(str[l]!='/')
+					// 	{
+					// 		temp[q] = str[l];
+					// 		q++;
+					// 		l++;
+					// 	}
+					// 	temp[q]='\0';
 
+					// }
 					// Set filename
 
 					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
