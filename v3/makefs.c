@@ -15,7 +15,7 @@ typedef struct{
 	int tid;
 	unsigned int bytes_read;
 	unsigned int bytes_written;
-	unsigned int fd;
+	int fd;
 	int fpi;
 	int fdi;
 	void * stream_pointer;
@@ -98,11 +98,22 @@ int main (int argc, char *argv[])
 	fprintf(program,"\tFILE* ret_file_ptr = 0; \n\n\n");
 
 
+
+
+	// Our detection loop begins here
+
+	//---------------------------------------------------------------------------------
+
+
 	while(fscanf(log,"%lf %lf %d %d %s",&prog_time,&exec_time,&pid, &tid,command)!=EOF)
 	{
+		
 		//printf("\n \n %lf %lf %d %d %s\n",prog_time,exec_time,pid,tid,command);
+		
 		usec = (unsigned int)(prog_time*1000000);
-		fprintf(program, "\tusleep(%u);\n\n", (unsigned int)usec);
+		fprintf(program, "\tusleep(%u);\n\n", (unsigned int)usec);			// Delay is printed into program
+
+
 
 		if(command[0]=='f')
 		{
@@ -133,27 +144,23 @@ int main (int argc, char *argv[])
 
 				fprintf(program,"\tfile_ptr%d = fopen(\"%s/%s\",\"%c\");\n",file_ptr_index,newPath,str,filemode);
 
-				file_ptr_index++;
-				/*
-				if(file_count<size)
-				{
-					// No need to reallocate
-				}
-				else
-				{
-					size = size*2;
-					fs_file *temp_fs;
-					temp_fs = realloc(fs,size * sizeof(fs*));
-					fs = temp_fs;
-				}
-				*/
 
-				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
+					// Set filename
+
+					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 					strcpy(fs[file_count].filename,str);
+
+					// Initialize byes written and read
 					fs[file_count].bytes_written = 0;
 					fs[file_count].bytes_read = 0;
+
+
 					fs[file_count].stream_pointer = file_ptr;
-					//printf("%s %p \n",fs[file_count].filename,fs[file_count].stream_pointer);
+
+					fs[file_count].fpi = file_ptr_index;
+					
+
+					file_ptr_index++;
 					file_count++;
 
 
