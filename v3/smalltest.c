@@ -54,7 +54,7 @@ int main()
 
 	fclose(in);
 
-	FILE *out = fopen("folder3/sub1/sub2/sub3/test3.txt","w");
+	FILE *out = fopen("test3.txt","w");
 	fputc(ch,out);
 	int arr[5] = {1,2,3,4,5};
 	fwrite((void*)arr,1,5,out);

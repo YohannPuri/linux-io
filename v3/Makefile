@@ -12,14 +12,21 @@ test:
 	LD_PRELOAD=./$(pf).so $(command)
 
 testfile:
-	touch test.txt
-	touch test2.txt
+	mkdir folder1
+	touch folder1/test.txt
+	mkdir folder1/sub1
+	touch folder1/sub1/test2.txt
 	touch test3.txt
-	touch test4.txt
+	mkdir folder2
+	touch folder2/test4.txt
 	$(CC) -shared -Wall -fPIC $(pf).c -o $(pf).so -ldl
-	$(CC) -Wall -Werror $(file).c -o $(file)
+	$(CC) -g -Wall -Werror $(file).c -o $(file)
 	chmod +x $(file)
 	LD_PRELOAD=./$(pf).so ./$(file)
+
+fs:
+	gcc -g makefs.c -o makefs
+	./makefs mount/1/2
 
 clean:
 	rm -f test.txt 
