@@ -780,8 +780,9 @@ int main (int argc, char *argv[])
 
 	}
 	temp = root;
-	printf("\n\n\n\n");
+	printf("\n\n");
 	print(temp,0);
+	printf("\n\n");
 
 	fprintf(program,"\n\nreturn 0;\n\n}");
 	fclose(log);
