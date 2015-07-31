@@ -692,10 +692,10 @@ void print(node *root,int level)
 	printf("|");
 	while(j<level)
 	{
-		printf("--");
+		printf("\t");
 		j++;
 	}
-	printf("%s\n",root->name);
+	printf("--%s\n",root->name);
 	int i = 0;
 	node *temp = root->children;
 
