@@ -302,7 +302,7 @@ int main (int argc, char *argv[])
 					temp->children = new_node;
 				}
 
-				print(root,0);
+				//print(root,0);
 
 					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 					strcpy(fs[file_count].filename,str);
@@ -623,7 +623,7 @@ int main (int argc, char *argv[])
 					temp->children = new_node;
 				}
 				
-				print(root,0);
+				//print(root,0);
 
 				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 				strcpy(fs[file_count].filename,str);
