@@ -289,7 +289,7 @@ int main (int argc, char *argv[])
 				strcpy(new_node->name,path);
 
 				temp->children = new_node;
-				temp->num_of_children++;
+				
 
 					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 					strcpy(fs[file_count].filename,str);
