@@ -86,17 +86,39 @@ int main (int argc, char *argv[])
 	FILE* fileinfo = fopen("fileinfo.txt","w");
 	FILE* graph = fopen("graph.txt","w+");
 
-	int l = 0;
+	int l = 0,w=0;
+
+	node *root = malloc(sizeof(node));
+
+	node *temp = NULL;
+
+	temp = root;
+
+	temp->num_of_children = 0;
+
+	char path[30];
 
 	for(l=0;newPath[l]!='\0';l++)
 	{
 		if(newPath[l]!='/')
-			fputc(newPath[l],graph);
+		{
+			temp->name[w] = newPath[l];
+		}
 		else
 		{
-			fputc('\n',graph);
+			temp->name[w] = '\0';
+			temp->next = NULL;
+			temp->children = malloc(sizeof(node));
+			temp->num_of_children++;
+			w=0;
+			continue;
 		}
+		w++;
 	}
+
+	temp->children = NULL;
+	temp->next = NULL;
+	temp->num_of_children = 0;
 
 	fputc('\n',graph);
 
