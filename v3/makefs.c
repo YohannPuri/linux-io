@@ -510,6 +510,94 @@ int main (int argc, char *argv[])
 				fprintf(program,"\tfd%d = open(\"%s/%s\",%d);\n",file_desc_index,newPath,str,mode);
 
 
+				int f = 0;
+				w = 0;
+				temp = base;
+
+				while(str[f]!='\0')
+				{
+
+					if(str[f]!='/')
+					{
+						// FORWARD SLASH HASNT BEEN HIT. COPYING NAME
+						path[w] = str[f];
+						w++;
+						f++;
+						continue;
+					}
+					else
+					{
+						path[w] = '\0';
+						w = 0;
+					}
+
+					// YOU HAVE THE PATH - >>> NOW CHECK CHILDREN
+
+					if(temp->num_of_children > 0)
+						{
+
+								// BASE HAS CHILDREN. THEY MUST BE CHECKED FOR PRE EXISTENCE
+
+								node *traverse = temp->children;
+								node *prev;
+								int exists = 0;
+
+								while(traverse!=NULL && exists == 0)
+								{
+									if(strcmp(traverse->name,path)==0)
+									{
+										
+										temp = traverse;
+										exists = 1;
+									}
+									else
+									{
+									prev = traverse;
+									traverse = traverse->next;
+									}
+								}
+
+								if(exists==0)
+								{
+									node *new_node = malloc(sizeof(node));
+									new_node->num_of_children = 0;
+									new_node->children = NULL;
+									new_node->next = NULL;
+									strcpy(new_node->name,path);
+
+									traverse = prev;
+									traverse ->next = new_node;
+									temp->num_of_children++;
+									temp = new_node;
+								}
+
+						}
+					else
+					{
+						node *new_node = malloc(sizeof(node));
+						new_node->num_of_children = 0;
+						new_node->children = NULL;
+						new_node->next = NULL;
+						strcpy(new_node->name,path);
+
+						temp->children = new_node;
+						temp->num_of_children++;
+						temp = temp->children;
+					}
+					w++;
+					f++;
+				}
+
+				path[w] = '\0';
+				w = 0;
+				node *new_node = malloc(sizeof(node));
+				new_node->num_of_children = 0;
+				new_node->children = NULL;
+				new_node->next = NULL;
+				strcpy(new_node->name,path);
+
+				temp->children = new_node;
+
 				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 				strcpy(fs[file_count].filename,str);
 
