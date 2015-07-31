@@ -29,10 +29,9 @@ fs:
 	./makefs mount/directory/sub
 
 clean:
-	rm -f test.txt 
-	rm -f test2.txt 
+	rm -rf folder1 
+	rm -rf folder2 
 	rm -f test3.txt 
-	rm -f test4.txt
 	rm -f preload.so
 	rm -f preload_tsc.so
 	rm -f log.txt
