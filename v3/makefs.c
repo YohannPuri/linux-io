@@ -272,7 +272,7 @@ int main (int argc, char *argv[])
 						strcpy(new_node->name,path);
 
 						temp->children = new_node;
-						temp->number_of_children++;
+						temp->num_of_children++;
 						temp = temp->children;
 					}
 					w++;
