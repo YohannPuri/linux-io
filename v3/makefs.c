@@ -647,6 +647,9 @@ int main (int argc, char *argv[])
 		}
 
 	}
+	temp = root;
+
+	print(temp);
 
 	fprintf(program,"\n\nreturn 0;\n\n}");
 	fclose(log);
@@ -665,5 +668,22 @@ int main (int argc, char *argv[])
 
 	fclose(fileinfo);
 	return 0;
+
+}
+
+
+void print(node *root)
+{
+	printf("%s \n",root->name);
+	int i = 0;
+	node *temp = root->children;
+
+	while(i<root->num_of_children)
+	{
+		
+		print(temp);
+		temp = temp->next;
+		i++;
+	}
 
 }
