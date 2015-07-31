@@ -33,7 +33,7 @@ typedef struct node {
 }node;
 
 
-void print(node *root);
+void print(node *root,int level);
 
 	// Data we are trying to maintain
 	/*
@@ -663,7 +663,7 @@ int main (int argc, char *argv[])
 	}
 	temp = root;
 
-	print(temp);
+	print(temp,0);
 
 	fprintf(program,"\n\nreturn 0;\n\n}");
 	fclose(log);
@@ -686,8 +686,14 @@ int main (int argc, char *argv[])
 }
 
 
-void print(node *root)
+void print(node *root,int level)
 {
+	int j = 0;
+	while(j<level)
+	{
+		printf("\t");
+		j++;
+	}
 	printf("%s %d\n",root->name, root->num_of_children);
 	int i = 0;
 	node *temp = root->children;
@@ -695,7 +701,7 @@ void print(node *root)
 	while(i<root->num_of_children)
 	{
 		
-		print(temp);
+		print(temp,level+1);
 		temp = temp->next;
 		i++;
 	}
