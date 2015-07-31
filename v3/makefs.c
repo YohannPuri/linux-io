@@ -780,7 +780,7 @@ int main (int argc, char *argv[])
 
 	}
 	temp = root;
-
+	printf("\n\n\n\n");
 	print(temp,0);
 
 	fprintf(program,"\n\nreturn 0;\n\n}");
