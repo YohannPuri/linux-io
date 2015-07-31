@@ -692,7 +692,7 @@ void print(node *root,int level)
 	printf("|");
 	while(j<level)
 	{
-		printf("\t");
+		printf("   ");
 		j++;
 	}
 	printf("--%s\n",root->name);
