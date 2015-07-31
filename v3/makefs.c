@@ -280,6 +280,8 @@ int main (int argc, char *argv[])
 					f++;
 				}
 
+				temp->num_of_children++;
+				
 				path[w] = '\0';
 				w = 0;
 				node *new_node = malloc(sizeof(node));
