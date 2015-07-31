@@ -22,7 +22,6 @@ typedef struct{
 
 }fs_file;
 
-typedef struct node node;
 
 typedef struct {
 
@@ -31,6 +30,8 @@ typedef struct {
 	node **children;
 
 } node;
+
+typedef struct node node;
 
 	// Data we are trying to maintain
 	/*
