@@ -96,7 +96,7 @@ int main (int argc, char *argv[])
 
 	temp->num_of_children = 0;
 
-	char path[30];
+	char path[50];
 
 	for(l=0;newPath[l]!='\0';l++)
 	{
@@ -111,16 +111,20 @@ int main (int argc, char *argv[])
 			temp->children = malloc(sizeof(node));
 			temp->num_of_children++;
 			w=0;
+			temp = temp->children;
 			continue;
 		}
 		w++;
 	}
 
+	temp->name[w] = '\0';
 	temp->children = NULL;
 	temp->next = NULL;
 	temp->num_of_children = 0;
 
-	fputc('\n',graph);
+	node *base = temp;
+
+	//fputc('\n',graph);
 
 	double prog_time = 0.0, exec_time = 0.0;
 	int pid = 0, tid = 0;
@@ -195,22 +199,82 @@ int main (int argc, char *argv[])
 
 				fprintf(program,"\tfile_ptr%d = fopen(\"%s/%s\",\"%c\");\n",file_ptr_index,newPath,str,filemode);
 
-					// char temp[100];
-					// l=0;
-					// fseek(graph,0,0);
-					// while(str[l]!='\0')
-					// {
-					// 	int q = 0;
-					// 	while(str[l]!='/')
-					// 	{
-					// 		temp[q] = str[l];
-					// 		q++;
-					// 		l++;
-					// 	}
-					// 	temp[q]='\0';
+				int f = 0;
+				w = 0;
+				temp = base;
 
-					// }
-					// Set filename
+				while(str[f]!='\0')
+				{
+
+					if(str[f]!='/')
+					{
+						// FORWARD SLASH HASNT BEEN HIT. COPYING NAME
+						path[w] = str[f];
+						continue;
+					}
+					else
+					{
+						path[w] = '\0';
+						w = 0;
+					}
+
+					// YOU HAVE THE PATH - >>> NOW CHECK CHILDREN
+
+					if(temp->num_of_children > 0)
+						{
+
+								// BASE HAS CHILDREN. THEY MUST BE CHECKED FOR PRE EXISTENCE
+
+								node *traverse = temp->children;
+								node *prev;
+								int exists = 0;
+
+								while(traverse!=NULL && exists == 0)
+								{
+									if(strcmp(traverse->name,new_node->name)==0)
+									{
+										
+										temp = traverse;
+										exists = 1;
+									}
+									else
+									{
+									prev = traverse;
+									traverse = traverse->next;
+									}
+								}
+
+								if(exists==0)
+								{
+									node *new_node = malloc(sizeof(node));
+									new_node->num_of_children = 0;
+									new_node->children = NULL;
+									new_node->next = NULL;
+									strcpy(new_node->name,path);
+
+									traverse = prev;
+									traverse ->next = new_node;
+									temp = new_node;
+								}
+
+						}
+					else
+					{
+						node *new_node = malloc(sizeof(node));
+						new_node->num_of_children = 0;
+						new_node->children = NULL;
+						new_node->next = NULL;
+						strcpy(new_node->name,path);
+
+						temp->children = new_node;
+						temp = temp->children;
+					}
+					w++;
+					f++;
+				}
+
+
+
 
 					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 					strcpy(fs[file_count].filename,str);
