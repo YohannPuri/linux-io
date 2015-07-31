@@ -509,7 +509,7 @@ int main (int argc, char *argv[])
 
 				fprintf(program,"\tfd%d = open(\"%s/%s\",%d);\n",file_desc_index,newPath,str,mode);
 
-
+				/*
 				int f = 0;
 				w = 0;
 				temp = base;
@@ -597,7 +597,8 @@ int main (int argc, char *argv[])
 				strcpy(new_node->name,path);
 
 				temp->children = new_node;
-
+				*/
+				
 				fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 				strcpy(fs[file_count].filename,str);
 
