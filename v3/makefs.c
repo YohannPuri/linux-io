@@ -231,7 +231,7 @@ int main (int argc, char *argv[])
 
 								while(traverse!=NULL && exists == 0)
 								{
-									if(strcmp(traverse->name,new_node->name)==0)
+									if(strcmp(traverse->name,path)==0)
 									{
 										
 										temp = traverse;
