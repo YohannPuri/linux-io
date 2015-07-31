@@ -26,7 +26,7 @@ testfile:
 
 fs:
 	gcc -g makefs.c -o makefs
-	./makefs mount/1/2
+	./makefs mount/directory/sub
 
 clean:
 	rm -f test.txt 
