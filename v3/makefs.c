@@ -679,7 +679,7 @@ int main (int argc, char *argv[])
 
 void print(node *root)
 {
-	printf("%s \n",root->name);
+	printf("%s %d\n",root->name, root->num_of_children);
 	int i = 0;
 	node *temp = root->children;
 
