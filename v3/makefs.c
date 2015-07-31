@@ -22,7 +22,7 @@ typedef struct{
 
 }fs_file;
 
-typedef struct{
+typedef struct node{
 
 	int num_of_children;
 	char name[30];
