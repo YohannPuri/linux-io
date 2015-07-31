@@ -213,6 +213,7 @@ int main (int argc, char *argv[])
 					{
 						// FORWARD SLASH HASNT BEEN HIT. COPYING NAME
 						path[w] = str[f];
+						w++;
 						f++;
 						continue;
 					}
