@@ -280,8 +280,16 @@ int main (int argc, char *argv[])
 					f++;
 				}
 
+				path[w] = '\0';
+				w = 0;
+				node *new_node = malloc(sizeof(node));
+				new_node->num_of_children = 0;
+				new_node->children = NULL;
+				new_node->next = NULL;
+				strcpy(new_node->name,path);
 
-
+				temp->children = new_node;
+				temp->num_of_children++;
 
 					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
 					strcpy(fs[file_count].filename,str);
