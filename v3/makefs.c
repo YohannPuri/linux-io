@@ -22,12 +22,15 @@ typedef struct{
 
 }fs_file;
 
-typedef struct node{
+typedef struct node node;
+
+typedef struct {
 
 	int num_of_children;
 	char name[30];
 	node **children;
-}node;
+
+} node;
 
 	// Data we are trying to maintain
 	/*
