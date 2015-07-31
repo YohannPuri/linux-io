@@ -23,14 +23,14 @@ typedef struct{
 }fs_file;
 
 
-struct node {
+typedef struct node {
 
 	int num_of_children;
 	char name[30];
-	node *children;
-	node *next;
+	struct node *children;
+	struct node *next;
 
-};
+}node;
 
 	// Data we are trying to maintain
 	/*
