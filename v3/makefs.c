@@ -599,7 +599,7 @@ int main (int argc, char *argv[])
 						temp->num_of_children++;
 						temp = temp->children;
 					}
-					w++;
+					
 					f++;
 				}
 
