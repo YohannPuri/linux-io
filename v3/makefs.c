@@ -258,6 +258,7 @@ int main (int argc, char *argv[])
 
 									traverse = prev;
 									traverse ->next = new_node;
+									temp->num_of_children++;
 									temp = new_node;
 								}
 
@@ -271,6 +272,7 @@ int main (int argc, char *argv[])
 						strcpy(new_node->name,path);
 
 						temp->children = new_node;
+						temp->number_of_children++;
 						temp = temp->children;
 					}
 					w++;
