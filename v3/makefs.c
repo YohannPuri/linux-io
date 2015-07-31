@@ -288,8 +288,20 @@ int main (int argc, char *argv[])
 				new_node->next = NULL;
 				strcpy(new_node->name,path);
 
-				temp->children = new_node;
-				
+				node *trav = temp->children;
+				if(trav!=NULL)
+				{
+					while(trav->next!=NULL)
+					{
+						trav = trav->next;
+					}
+					trav->next = new_node;
+				}
+				else
+				{
+					temp->children = new_node;
+				}
+
 				print(root,0);
 
 					fs[file_count].filename = (char*) malloc(sizeof(strlen(str)));
