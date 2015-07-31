@@ -32,6 +32,9 @@ typedef struct node {
 
 }node;
 
+
+void print(node *root);
+
 	// Data we are trying to maintain
 	/*
 		We need filenames that we are trying to create...
