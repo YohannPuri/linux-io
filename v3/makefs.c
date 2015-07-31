@@ -689,12 +689,13 @@ int main (int argc, char *argv[])
 void print(node *root,int level)
 {
 	int j = 0;
+	printf("|");
 	while(j<level)
 	{
-		printf("\t");
+		printf("--");
 		j++;
 	}
-	printf("%s %d\n",root->name, root->num_of_children);
+	printf("%s\n",root->name);
 	int i = 0;
 	node *temp = root->children;
 
